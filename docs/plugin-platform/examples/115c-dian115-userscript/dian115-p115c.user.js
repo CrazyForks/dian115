@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         115 转存离线助手
 // @namespace    dian115.example
-// @version      0.6.4
+// @version      0.6.5
 // @description  手填 Cookie 浏览 115 目录；识别已解锁的 115 分享、磁力和 ED2K，并支持外部推送。
 // @author       yamcv98
 // @license      MIT
@@ -28,7 +28,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '0.6.4';
+  const VERSION = '0.6.5';
   const STORE_KEY = 'd115-p115c-config-v1';
   const DIRECT = 'direct';
   const PUSH = 'push';
@@ -46,6 +46,8 @@
     cookie: '',
     targetCid: '',
     targetName: '',
+    pushTargetCid: '',
+    pushTargetName: '',
     dian115Base: '',
     openApiKey: '',
     autoScan: true,
@@ -458,6 +460,20 @@
     return value;
   }
 
+  // The push body stays exactly two fields unless the user explicitly picked a
+  // target directory for external pushes. target_cid is a bare 115 directory
+  // CID: the script never sends any path, and the server validates the CID
+  // against the account that actually runs the push.
+  function buildPushPayload(candidate) {
+    const payload = {
+      source: PUSH_SOURCE,
+      link: canonicalCandidateLink(candidate),
+    };
+    const targetCid = text(state.config.pushTargetCid);
+    if (targetCid) payload.target_cid = targetCid;
+    return payload;
+  }
+
   async function pushExternal(candidate, waitForCompletion = true) {
     validatePushConfig();
     const base = configuredPushBase();
@@ -472,10 +488,7 @@
           'X-OpenAPI-Key': openApiKey,
           'Idempotency-Key': idempotencyKey(candidate),
         },
-        data: JSON.stringify({
-          source: PUSH_SOURCE,
-          link: canonicalCandidateLink(candidate),
-        }),
+        data: JSON.stringify(buildPushPayload(candidate)),
       });
       const accepted = parseJSONResponse(response);
       const requestId = accepted.request_id;
@@ -942,6 +955,17 @@
           rel: 'noopener noreferrer',
           text: 'DIAN115 GitHub',
         }));
+        const pushTargetText = el('span', {
+          text: state.config.pushTargetCid !== ''
+            ? `推送目标：${state.config.pushTargetName || '目录'}（CID ${state.config.pushTargetCid}）`
+            : '推送目标：跟随 DIAN115 配置',
+        });
+        const pushTargetRow = [pushTargetText, button('选择目录', () => openPicker(pushTargetText, PUSH), 'd115-share')];
+        if (state.config.pushTargetCid !== '') pushTargetRow.push(button('清除', () => setTargetCid('', '', PUSH)));
+        form.append(el('div', { className: 'd115-target' }, pushTargetRow));
+        form.append(el('small', {
+          text: '可选。所选 CID 必须属于 DIAN115 执行外部推送所用的 115 账号，否则服务端会在执行时校验失败；不选择时使用服务端配置的目录。',
+        }));
         actions.append(button('校验配置格式', () => {
           validatePushConfig();
           setStatus('配置格式有效；实际可用性会在推送时验证', 'success');
@@ -1075,15 +1099,27 @@
     render();
   }
 
-  function setTargetCid(cid, name) {
-    state.config.targetCid = String(cid);
-    state.config.targetName = String(name || `CID ${cid}`);
+  // DIRECT keeps the transfer/offline target; PUSH keeps the optional target
+  // that a single external-push request may override. Only CIDs are stored:
+  // the script never builds or sends a directory path.
+  function setTargetCid(cid, name, slot) {
+    const isPush = slot === PUSH;
+    const cidKey = isPush ? 'pushTargetCid' : 'targetCid';
+    const nameKey = isPush ? 'pushTargetName' : 'targetName';
+    const label = isPush ? '推送目标目录' : '目标目录';
+    const value = String(cid || '');
+    state.config[cidKey] = value;
+    state.config[nameKey] = value ? String(name || `CID ${value}`) : '';
     saveConfig();
     if (state.renderPanel) state.renderPanel();
-    setStatus(`目标目录已设为 ${state.config.targetName}（CID ${state.config.targetCid}）`, 'success');
+    if (!value) {
+      setStatus(isPush ? '已清除推送目标目录，本次推送使用 DIAN115 服务端配置的目录' : `已清除${label}`, 'success');
+      return;
+    }
+    setStatus(`${label}已设为 ${state.config[nameKey]}（CID ${value}）`, 'success');
   }
 
-  function openPicker(targetText) {
+  function openPicker(targetText, slot) {
     return new Promise(resolve => {
       const overlay = el('div', { className: 'd115-overlay' });
       const box = el('div', { className: 'd115-picker' });
@@ -1095,7 +1131,7 @@
       const close = result => { overlay.remove(); resolve(result); };
       const choose = button('选择当前目录', () => {
         const node = current();
-        setTargetCid(node.cid, node.name);
+        setTargetCid(node.cid, node.name, slot);
         targetText.textContent = `目标：${node.name}（CID ${node.cid}）`;
         close(true);
       }, 'd115-share');
@@ -1541,6 +1577,8 @@
       listDian115Subscriptions,
       buildHdhiveUrl,
       buildTmdbUrl,
+      buildPushPayload,
+      setTargetCid,
       rectsOverlap,
       chooseActionPlacement,
     };

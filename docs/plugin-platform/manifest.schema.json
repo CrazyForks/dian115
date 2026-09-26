@@ -235,7 +235,12 @@
         "background_timeout_ms": {"type":"integer","minimum":1000,"maximum":3600000,"default":300000},
         "memory_mb": {"type":"integer","minimum":4,"maximum":512,"default":64},
         "max_concurrency": {"type":"integer","minimum":1,"maximum":16,"default":4},
-        "restart_policy": {"const":"on-failure","default":"on-failure"}
+        "restart_policy": {"const":"on-failure","default":"on-failure"},
+        "resident": {
+          "type": "boolean",
+          "default": false,
+          "description": "常驻模式：为 WASM 插件额外实例化一个长期运行的模块，执行一次不限时的 resident 后台调用，让插件像本机模块一样持续运行定时器、轮询和事件循环。"
+        }
       }
     },
     "permissions": {
@@ -245,12 +250,16 @@
       "required": ["apis"],
       "properties": {
         "apis": {
-          "type": "array", "maxItems": 128, "uniqueItems": true,
+          "type": "array", "maxItems": 512, "uniqueItems": true,
           "items": { "$ref": "#/$defs/apiPermission" }
         },
         "network": {
           "type": "array", "maxItems": 64, "uniqueItems": true,
           "items": { "$ref": "#/$defs/networkPermission" }
+        },
+        "host_access": {
+          "type": "string", "enum": ["standard", "extended"], "default": "standard",
+          "description": "standard 只允许调用已发布的 Host API 目录；extended 经管理员安装时明确同意后，允许调用除凭证、认证、系统安全与插件管理之外的全部 /api 路由。extended 声明的接口不受目录限制，但响应会经过通用密钥脱敏。"
         }
       }
     },
@@ -260,7 +269,11 @@
       "properties": {
         "method": { "type": "string", "enum": ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE"] },
         "path": { "type": "string", "minLength": 5, "maxLength": 240, "pattern": "^/api/[A-Za-z0-9._~:/{}?=&-]+$" },
-        "reason": { "type": "string", "minLength": 1, "maxLength": 240 }
+        "reason": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "optional": {
+          "type": "boolean", "default": false,
+          "description": "为 true 时，宿主不提供该接口不再导致安装失败；该声明被记录为不可用，调用时返回清晰错误。"
+        }
       }
     },
     "networkPermission": {

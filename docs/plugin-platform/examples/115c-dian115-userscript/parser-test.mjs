@@ -168,4 +168,20 @@ const unlocked = plain(api.extractDianyingCandidates({
 }))
 assert.equal(unlocked.length, 2)
 assert.deepEqual(unlocked.map(item => item.type).sort(), ['magnet', 'share115'])
+
+// External push carries a target CID only when one was picked; the default
+// body stays exactly two fields and no path is ever sent.
+const pushCandidate = { type: 'share115', shareCode: 'AbC123', receiveCode: 'pwd9' }
+assert.deepEqual(plain(api.buildPushPayload(pushCandidate)), {
+  source: '转存助手', link: 'https://115.com/s/AbC123?password=pwd9',
+})
+api.setTargetCid('998877', '电影', 'push')
+assert.deepEqual(plain(api.buildPushPayload(pushCandidate)), {
+  source: '转存助手', link: 'https://115.com/s/AbC123?password=pwd9', target_cid: '998877',
+})
+assert.equal('path' in plain(api.buildPushPayload(pushCandidate)), false)
+api.setTargetCid('', '', 'push')
+assert.deepEqual(plain(api.buildPushPayload(pushCandidate)), {
+  source: '转存助手', link: 'https://115.com/s/AbC123?password=pwd9',
+})
 console.log('115 transfer/offline userscript smoke test: PASS')

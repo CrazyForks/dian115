@@ -10,6 +10,8 @@
 - `runtime.initialize`、state、action、job、普通 event、Telegram event 和 shutdown；
 - `host.call` 发送插件通知、读写 Host Storage、访问本地 HTTP 服务和创建目录监控；
 - 初始化时动态注册 1 个 Telegram 命令和 1 个关键词；示例遵守每个插件最多 3 个命令和 3 个关键词；
+- 常驻模块模式（`runtime.resident`）：第二个模块实例运行不限时的 `resident` 主循环，定时把心跳写入 Host Storage，并在启动时发送带回调按钮的通知；
+- Telegram 回调按钮：通知和回复按钮携带 `callback_data`，点击后以 `telegram.callback` 事件回到插件，插件用 `answer`/`alert`/`reply` 应答并可持续多轮交互；
 - 用户点击触发的 `window.open()` 外部弹窗、图片渲染和浏览器存储；
 - 生成完整性清单、Ed25519 签名、正确 ZIP 执行位、包 SHA-256 和市场条目。
 
@@ -118,6 +120,10 @@ runtime 保持一个并发读取循环。每个宿主请求单独处理，因此
 测试通知用 action invocation ID 派生 `Idempotency-Key`。目录监控同样使用稳定 key，topic 已在 Manifest events 中声明。`storage-demo` 展示 Host Storage 的 GET/PUT；`fetch-local` 接受 `http://127.0.0.1:8080/health` 或其他 HTTP/HTTPS 地址，由宿主网络 Broker 发出，宿主代理域名规则优先，非 HTTPS 不会被平台拦截。宿主消息解析仍然优先；只有未被宿主处理且命中 `/plugin_example` 或“完整插件示例”的消息才进入该 runtime。
 
 Telegram 路由在 `runtime.initialize` 中注册，而不是安装时写入 Manifest。注册被拒绝时只记录错误，插件仍可安装和运行；命令或关键词冲突不会覆盖宿主或其他插件。注册成功后，宿主最多将 3 个命令和 3 个关键词交给该插件，宿主没有处理的消息才会进入 `telegram.message` event。
+
+常驻模块在 Manifest 中声明 `runtime.resident: true` 后启用：宿主用同一编译产物实例化第二个模块并向它发起一次不限时的 `resident` 调用，插件在其中运行主循环（示例每分钟向 Host Storage 写入一次心跳）。常驻模块与服务模块是两个独立实例、内存不共享，跨模块状态必须通过 Host Storage 等宿主服务交换；`resident` 调用返回错误视为崩溃，由监督器按 `restart_policy` 重启。
+
+回调按钮在按钮对象中用 `callback_data` 代替 `url`（二选一，最长 32 字节）。点击后宿主向创建该按钮的安装实例投递 `telegram.callback` 事件，事件需要在 Manifest `events` 中声明；插件返回 `handled`、`answer`（按钮提示，≤200 字符）、`alert` 和可选的 `reply`，`reply` 与 `telegram.message` 回复格式相同且同样支持回调按钮，可构成多轮交互。空响应视为静默确认。
 
 外部 OAuth 或详情页必须在用户点击回调中同步调用 `window.open('about:blank', ...)`，再把 action 返回的 URL 写入弹窗的 `location`。后台定时任务不能打开弹窗；浏览器拦截时应保留复制 URL 或粘贴 code 的备用流程。
 

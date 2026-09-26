@@ -4,7 +4,7 @@
   "id": "example.complete-plugin",
   "name": "完整插件示例",
   "version": "1.0.0",
-  "description": "演示状态、动作、任务、事件、通知、Host Storage、本地 HTTP、目录监控、Telegram 和主题界面。",
+  "description": "演示状态、动作、任务、事件、通知、Host Storage、本地 HTTP、目录监控、Telegram、常驻模块与回调按钮。",
   "default_locale": "zh-CN",
   "publisher": {
     "name": "Example Publisher",
@@ -25,7 +25,8 @@
     "background_timeout_ms": 300000,
     "max_concurrency": 1,
     "restart_policy": "on-failure",
-    "memory_mb": 64
+    "memory_mb": 64,
+    "resident": true
   },
   "permissions": {
     "apis": [
@@ -71,7 +72,8 @@
     }
   },
   "events": [
-    "files.changed"
+    "files.changed",
+    "telegram.callback"
   ],
   "jobs": [
     {

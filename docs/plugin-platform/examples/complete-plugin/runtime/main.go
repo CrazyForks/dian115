@@ -187,8 +187,56 @@ func (r *runtime) invoke(input invokeParams) (any, error) {
 		return r.job(input.Envelope.Payload)
 	case "event":
 		return r.event(input.Envelope.Payload)
+	case "resident":
+		// 常驻模式：宿主用第二个模块实例发起这一次不限时调用，插件在此运行
+		// 自己的主循环。返回错误会被视为崩溃并触发重启。
+		return r.residentLoop()
 	default:
 		return nil, fmt.Errorf("unsupported invocation op %q", input.Envelope.Op)
+	}
+}
+
+// residentLoop 是常驻模块的主循环。注意常驻模块是独立的第二个实例，与应答
+// 普通调用的服务模块不共享内存；需要展示给界面或跨模块交换的状态请通过
+// Host Storage 持久化。
+func (r *runtime) residentLoop() (any, error) {
+	r.log("info", "resident loop started", nil)
+	r.sendCallbackNotification()
+	ticker := time.NewTicker(time.Minute)
+	defer ticker.Stop()
+	beats := 0
+	for range ticker.C {
+		beats++
+		value, _ := json.Marshal(map[string]any{"beats": beats, "at": time.Now().UTC().Format(time.RFC3339Nano)})
+		body, _ := json.Marshal(map[string]json.RawMessage{"value": value})
+		_, err := r.hostCall(hostCallRequest{
+			Method: "PUT", Path: "/api/plugin-runtime/storage/resident-heartbeat",
+			Headers:    map[string]string{"content-type": "application/json", "idempotency-key": fmt.Sprintf("resident-heartbeat-%d", beats)},
+			BodyBase64: base64.RawStdEncoding.EncodeToString(body),
+		})
+		if err != nil {
+			r.log("warning", "resident heartbeat was not saved", map[string]any{"reason": err.Error()})
+		}
+	}
+	return map[string]any{"status": "stopped"}, nil
+}
+
+// sendCallbackNotification 演示带回调按钮的出站通知：用户点击“查询状态”后，
+// 宿主会把 telegram.callback 事件投递回本插件。
+func (r *runtime) sendCallbackNotification() {
+	body, _ := json.Marshal(map[string]any{
+		"level": "info", "title": "示例插件常驻模块已启动",
+		"body":       "常驻循环正在后台运行，点击按钮可随时查询运行状态。",
+		"dedupe_key": "resident-loop-started",
+		"buttons":    [][]map[string]string{{{"text": "查询状态", "callback_data": "status"}}},
+	})
+	_, err := r.hostCall(hostCallRequest{
+		Method: "POST", Path: "/api/notifications/plugin",
+		Headers:    map[string]string{"content-type": "application/json", "idempotency-key": "resident-loop-started"},
+		BodyBase64: base64.RawStdEncoding.EncodeToString(body),
+	})
+	if err != nil {
+		r.log("warning", "resident startup notification was not sent", map[string]any{"reason": err.Error()})
 	}
 }
 
@@ -367,7 +415,37 @@ func (r *runtime) event(raw json.RawMessage) (any, error) {
 			"handled": true,
 			"reply": map[string]any{
 				"format": "plain", "text": "完整插件示例已收到：" + data.Match.Value,
-				"buttons": [][]map[string]string{{{"text": "查看文档", "url": "https://example.com/plugins/complete-plugin"}}},
+				// 第一行演示回调按钮（点击后宿主投递 telegram.callback 事件），
+				// 第二行演示普通链接按钮。
+				"buttons": [][]map[string]string{
+					{{"text": "查询状态", "callback_data": "status"}},
+					{{"text": "查看文档", "url": "https://example.com/plugins/complete-plugin"}},
+				},
+			},
+		}, nil
+	}
+	if payload.Topic == "telegram.callback" {
+		// 回调按钮点击：data.callback.data 是插件创建按钮时附带的原样负载。
+		var data struct {
+			Callback struct {
+				Data string `json:"data"`
+			} `json:"callback"`
+		}
+		_ = json.Unmarshal(payload.Data, &data)
+		if data.Callback.Data != "status" {
+			return map[string]any{"handled": true, "answer": "未知操作", "alert": true}, nil
+		}
+		r.mu.Lock()
+		snapshot := r.state
+		r.mu.Unlock()
+		return map[string]any{
+			"handled": true,
+			"answer":  "示例插件运行正常",
+			"reply": map[string]any{
+				"format": "plain",
+				"text": fmt.Sprintf("运行状态：%s\n最近消息：%s\n动作次数：%d，事件次数：%d",
+					snapshot.LastStatus, snapshot.LastMessage, snapshot.ActionCount, snapshot.EventCount),
+				"buttons": [][]map[string]string{{{"text": "再次查询", "callback_data": "status"}}},
 			},
 		}, nil
 	}

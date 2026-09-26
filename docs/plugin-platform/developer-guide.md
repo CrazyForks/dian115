@@ -116,6 +116,12 @@ The UI and runtime are both required:
 
 Only declare local APIs the process actually calls. Every `(method, path template)` must appear in [OpenAPI](openapi-v1.yaml). Paths are exact; declaring one parameter route does not authorize a static sibling. Write methods require an `Idempotency-Key` between 16 and 128 printable ASCII characters unless the endpoint's OpenAPI operation says it owns an equivalent idempotency mechanism.
 
+Three optional declaration refinements:
+
+- `"optional": true` on an API entry keeps installation working on hosts that do not offer it; the entry is recorded as `unavailable_apis` and calls fail with a clear error.
+- `"host_access": "extended"` asks the administrator for broader access: any non-protected `/api` route (credentials, authentication, host security settings, plugin management and bot tokens stay host-only). Extended calls keep the same idempotency, audit, path-policy and size-limit rules, and JSON responses pass through generic credential redaction.
+- `host.capabilities` (a `host.*` runtime method) returns the host version, the live API catalog, and this installation's granted and unavailable APIs, so plugins branch on capability instead of version sniffing.
+
 `permissions.network` is not a website allowlist. A plugin can use the Broker for any HTTP/HTTPS origin, including localhost, loopback, container, host and LAN services. These declarations record a routing preference for a specific origin and method:
 
 - `system`: use the host proxy-domain decision;
@@ -253,6 +259,10 @@ Register incoming routes at runtime, normally while handling `runtime.initialize
 Each installation may register at most 3 commands and 3 keywords. Registration atomically replaces the installation's previous set. Reserved host commands, conflicts with another plugin, or the global 64-plugin-command limit return JSON-RPC `-32003`; the previous registration remains active and installation is not affected.
 
 Host parsing always runs first. Only a message the host did not handle and that matches a registered route is delivered as `event` topic `telegram.message`. Unmatched messages never reach plugins.
+
+Notification and reply buttons may carry `callback_data` instead of `url`. A tap is delivered back to the owning installation as `event` topic `telegram.callback` (declare it in `events`), and the plugin answers with a toast (`answer`/`alert`) plus an optional follow-up `reply`. See [host.call v2](host-call-v2.md) sections 11-12 for the callback contract and the file/transfer/job broker APIs.
+
+WASM plugins that need an always-on main loop (timers, pollers, long-lived state) can declare `"resident": true` in `runtime`; the host keeps a second module instance running an endless `resident` invocation. See [WASM runtime v1](wasm-runtime-v1.md).
 
 ## 7. Directory watches
 

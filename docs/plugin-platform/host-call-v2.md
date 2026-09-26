@@ -354,3 +354,99 @@ lowercase_hex(SHA256(body))
 6. 只在收到 `code: "ok"` 和正数 `data.id` 后显示创建成功。保存该 ID，取消时调用对应 DELETE 并等待确认；网络超时不能当作未创建，必须查询宿主记录再决定是否重试。每次新的用户操作使用新幂等键，同一次重试保留原键。
 
 缺集能力必须以运行宿主的 API 目录为准。旧宿主没有 `/api/plugin-host/emby/episodes` 时应提示升级，不能退化为跳过媒体库核对。排期可使用 TV 详情的 `next_episode_to_air`；缺少该字段表示没有已公布的下一集信息。
+
+## 9. 扩展访问模式（host_access）
+
+标准模式下插件只能调用 `x-dian115-host-apis.entries` 发布的 Host API 目录。需要更深集成的插件可以在 Manifest 中声明：
+
+```json
+{
+  "permissions": {
+    "host_access": "extended",
+    "apis": [
+      {"method":"GET","path":"/api/organize/rules","reason":"读取宿主整理规则"}
+    ]
+  }
+}
+```
+
+`extended` 模式下插件可以调用除下列受保护前缀之外的任何 `/api` 路由，不要求逐条出现在目录中：
+
+```text
+/api/auth/            认证与 2FA
+/api/115/cookie、login、qrcode、captcha、check-*、backup-accounts、backup/qrcode
+/api/accounts/115     115 账号与 Cookie 管理
+/api/settings         宿主安全设置
+/api/system/、/api/debug/、/api/guard、/api/self-update
+/api/plugin-center/   插件管理本身
+/api/emby-control/system/、/api/emby-manager/、/api/emby-proxies
+/api/plugins/tg-private-bot、/api/plugins/tg-group-bot
+/api/portal、/api/user-portal、/api/logs
+```
+
+边界说明：
+
+- `extended` 在安装确认对话框中作为高风险权限单独展示，管理员明确同意后生效；
+- 扩展调用的 JSON 响应会经过通用密钥字段与 URL 凭据脱敏；非 JSON 响应原样返回；
+- 写方法仍需 `Idempotency-Key`，审计、路径保护、代理规则和大小上限与目录接口一致；
+- `permissions.apis` 在扩展模式下仍然建议逐条声明，作为安装时的用途披露。
+
+## 10. 可选接口声明与运行时自省
+
+声明 `"optional": true` 的接口在宿主不提供时不再导致安装失败；宿主把它记录到安装记录的 `unavailable_apis`，调用时返回 `host API was not approved` 错误。插件可以用运行时自省代替试错：
+
+```json
+{"method":"host.capabilities"}
+```
+
+返回当前宿主版本、Plugin API 版本、访问级别、完整 Host API 目录以及本安装实例已批准和不可用的接口清单：
+
+```json
+{
+  "host_version": "3.9.0",
+  "plugin_api": "2.0.0",
+  "host_access": "standard",
+  "apis": [{"method":"GET","path":"/api/tmdb/search","category":"tmdb"}],
+  "granted_apis": [{"method":"GET","path":"/api/tmdb/search"}],
+  "unavailable_apis": []
+}
+```
+
+插件应按 `granted_apis` 与目录分支功能，而不是按宿主版本号猜测。宿主版本超出 Manifest `compatibility.dian115` 范围时，运行时会以 `plugin_incompatible` 暂停插件并提示升级，而不是继续运行到崩溃。
+
+## 11. 文件、115 传输与任务 Broker
+
+`/api/plugin-host/` 下的 broker 接口把原来只有外部 `/plugin-api/v1` 通道可用的能力开放给 host.call。所有资源引用（`entry_ref`、`preview_ref`、`job_ref` 等）都是安装实例作用域内的不透明标识，跨插件不可复用。
+
+文件 Broker：
+
+- `GET /api/plugin-host/files/roots`、`GET /files/entries`、`GET /files/entries/:entry_ref`：浏览宿主向插件开放的本地与 CD2/AURA 挂载根目录。
+- `GET /files/entries/:entry_ref/content`：读取文件内容。支持 `Range: bytes=start-end` 分页，单页最大 4MiB，循环分页即可读取任意大小的完整文件；CD2/AURA 挂载文件经宿主挂载点流式读取，插件无需接触云盘凭据或 gRPC 连接。
+- `PUT /files/entries/:entry_ref/content`：以 `{data_base64, offset, truncate}` 按偏移写入本地文件，单次最大 4MiB；可选 `If-Match` 乐观锁。仅纯本地根目录可写，CD2/AURA 挂载与 115 云端条目不提供内容写入。
+- `PATCH /files/entries/:entry_ref`（改名）、`POST /files/directories`（建目录）、`POST /files/operations`（异步复制/移动，返回 `job_ref`）。
+- `POST /files/downloads`：以 `{url, parent_ref, name?}` 把远程文件流式下载到指定本地可写目录，单个任务上限 8GiB，异步执行并返回 `job_ref`。下载目标明确排除 CD2/AURA 挂载目录与 115 云端。
+
+115 传输 Broker：`GET /api/plugin-host/accounts/115`、`POST /accounts/115/selections` 创建账号选择引用；`GET/POST /transfers/115/targets`、`POST /transfers/115/share-previews`、`GET /transfers/115/share-previews/:preview_ref/items`、`POST /transfers/115/share-receives`、`POST /transfers/115/offline-downloads`、`GET /transfers/115/offline-tasks`、`GET /transfers/115/offline-quota`。账号 Cookie 始终留在宿主，插件只持有不透明引用。
+
+任务查询：`GET /api/plugin-host/jobs/:job_ref` 查询状态与结果，`POST /api/plugin-host/jobs/:job_ref/cancel` 取消。
+
+声明这些接口后宿主自动推导所需的 `files.local.*`、`files.cloud.*`、`transfer.115.*`、`accounts.115.use` 运行能力；broker 写操作自带幂等生命周期，重试同一 `Idempotency-Key` 不会重复执行。
+
+## 12. Telegram 回调按钮
+
+通知和回复按钮除 `url` 外还支持 `callback_data`（二选一，最长 32 字节，不含控制字符）：
+
+```json
+{"buttons": [[{"text": "重试", "callback_data": "retry:job9"}]]}
+```
+
+用户点击按钮后，宿主向该按钮所属的插件安装实例投递 `telegram.callback` 事件（需在 manifest `events` 中声明并具备 `events.subscribe` 能力）：
+
+```json
+{
+  "callback": {"data": "retry:job9"},
+  "message": {"message_id": 123, "chat_id": 456, "chat_type": "private", "user_id": 789, "date": 1759000000}
+}
+```
+
+插件返回 `{handled, answer, alert, reply}`：`answer`（≤200 字符）作为按钮提示 toast，`alert` 控制是否弹窗，`reply` 与 `telegram.message` 的回复格式相同（文本/HTML、HTTPS 图片、按钮，按钮同样支持 `callback_data`）。空响应视为静默确认。每次点击有独立的 Telegram 回调 ID，宿主按它做幂等去重，重试不会重复执行插件逻辑。

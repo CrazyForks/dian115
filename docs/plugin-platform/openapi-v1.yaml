@@ -26,384 +26,1154 @@ x-dian115-host-call:
 x-dian115-host-apis:
   generated_from: internal Host API catalog
   entries:
-    - method: GET
-      path: /api/115/directories
-      category: "115"
-      risk: read
-      title: 浏览 115 目录
-      description: 读取目标账号的目录列表。
-      host_credentials: true
-    - method: GET
-      path: /api/115/offline/tasks
-      category: "115"
-      risk: read
-      title: 查询离线任务
-      description: 查询目标账号的离线任务。
-      host_credentials: true
-    - method: GET
-      path: /api/115/offline/quota
-      category: "115"
-      risk: read
-      title: 查询离线额度
-      description: 查询目标账号的离线配额。
-      host_credentials: true
-    - method: POST
-      path: /api/115/offline/add
-      category: "115"
-      risk: write
-      title: 创建离线任务
-      description: 将磁力、ED2K 或其他离线地址添加到指定目录。
-      host_credentials: true
-    - method: POST
-      path: /api/115/offline/delete
-      category: "115"
+    - method: DELETE
+      path: /api/115/shares/:share_code
+      category: 115
       risk: dangerous
-      title: 删除离线任务
-      description: 删除目标账号中的离线任务。
+      title: "删除分享"
+      description: "删除一条分享链接。"
       host_credentials: true
-    - method: POST
-      path: /api/115/offline/clear
-      category: "115"
-      risk: dangerous
-      title: 清理离线任务
-      description: 批量清理目标账号中的离线任务。
-      host_credentials: true
-    - method: POST
-      path: /api/115/offline/restart
-      category: "115"
-      risk: write
-      title: 重试离线任务
-      description: 重新提交一个离线任务。
-      host_credentials: true
-    - method: GET
-      path: /api/115/offline/download-path
-      category: "115"
-      risk: read
-      title: 查询默认离线目录
-      description: 查询目标账号的默认离线目录。
-      host_credentials: true
-    - method: POST
-      path: /api/115/share/receive
-      category: "115"
-      risk: write
-      title: 转存 115 分享
-      description: 将 115 分享链接转存到目标账号的指定目录。
-      host_credentials: true
-    - method: GET
-      path: /api/115/accounts/options
-      category: "115"
-      risk: read
-      title: 列出可用账号
-      description: 返回不含 Cookie 的主账号和备用号池选项。
-      host_credentials: true
-    - method: GET
-      path: /api/local-dirs
-      category: files
-      risk: read
-      title: 浏览可选目录
-      description: 读取文件管理器可用目录。
-      host_credentials: false
-    - method: GET
-      path: /api/local-files
-      category: files
-      risk: read
-      title: 列出文件
-      description: 列出本地挂载或 CD2 挂载目录中的文件。
-      host_credentials: false
-    - method: GET
-      path: /api/local-files/tree
-      category: files
-      risk: read
-      title: 读取目录树
-      description: 读取本地挂载或 CD2 挂载目录树。
-      host_credentials: false
-    - method: POST
-      path: /api/local-files/mkdir
-      category: files
-      risk: write
-      title: 创建目录
-      description: 在文件管理器中创建目录。
-      host_credentials: false
-    - method: POST
-      path: /api/local-files/rename
-      category: files
-      risk: dangerous
-      title: 重命名文件
-      description: 重命名文件或目录。
-      host_credentials: false
     - method: DELETE
       path: /api/local-files
       category: files
       risk: dangerous
-      title: 删除文件
-      description: 删除文件或目录。
+      title: "删除文件"
+      description: "删除文件或目录。"
       host_credentials: false
-    - method: POST
-      path: /api/local-files/move
-      category: files
+    - method: DELETE
+      path: /api/organize/history/:id
+      category: organize
       risk: dangerous
-      title: 移动文件
-      description: 按宿主规则在本地挂载或 CD2 之间移动文件。
+      title: "删除整理历史"
+      description: "删除一条整理历史记录。"
       host_credentials: false
-    - method: POST
-      path: /api/local-files/copy
-      category: files
-      risk: write
-      title: 复制文件
-      description: 按宿主规则在本地挂载或 CD2 之间复制文件。
+    - method: DELETE
+      path: /api/organize/rules/:id
+      category: organize
+      risk: dangerous
+      title: "删除整理规则"
+      description: "删除一条整理规则。"
       host_credentials: false
-    - method: POST
-      path: /api/local-files/recognize
-      category: files
-      risk: write
-      title: 识别媒体文件
-      description: 调用宿主识别能力分析文件。
+    - method: DELETE
+      path: /api/plugin-runtime/storage/:key
+      category: "plugin-runtime"
+      risk: dangerous
+      title: "删除插件数据"
+      description: "删除当前安装实例自己的持久化数据。"
+      host_credentials: false
+    - method: DELETE
+      path: /api/plugin-runtime/watches/:watch_ref
+      category: "plugin-runtime/watch"
+      risk: dangerous
+      title: "删除目录监控"
+      description: "永久删除当前插件的一条目录监控及其游标。"
+      host_credentials: false
+    - method: DELETE
+      path: /api/rules/:id
+      category: rules
+      risk: dangerous
+      title: "删除同步规则"
+      description: "删除一条同步规则。"
+      host_credentials: false
+    - method: DELETE
+      path: /api/rules/:id/tree
+      category: rules
+      risk: dangerous
+      title: "清空规则目录树"
+      description: "清空一条同步规则已生成的目录树。"
+      host_credentials: false
+    - method: DELETE
+      path: /api/subscribe/pool/intents/:id
+      category: subscriptions
+      risk: dangerous
+      title: "取消聚合订阅"
+      description: "取消一条聚合订阅意图。"
       host_credentials: false
     - method: GET
-      path: /api/local-files/organize-options
-      category: files
+      path: /api/115/accounts/options
+      category: 115
       risk: read
-      title: 读取整理选项
-      description: 读取可用的整理目标和规则。
-      host_credentials: false
-    - method: POST
-      path: /api/local-files/organize
-      category: files
-      risk: dangerous
-      title: 整理文件
-      description: 调用宿主文件整理能力。
-      host_credentials: false
-    - method: POST
-      path: /api/local-files/batch
-      category: files
-      risk: dangerous
-      title: 批量管理文件
-      description: 批量复制、移动或删除文件。
-      host_credentials: false
+      title: "列出可用账号"
+      description: "返回不含 Cookie 的主账号和备用号池选项。"
+      host_credentials: true
     - method: GET
-      path: /api/local-files/batch-status
-      category: files
+      path: /api/115/browse-dirs
+      category: 115
       risk: read
-      title: 查询文件任务
-      description: 查询批量文件任务状态。
-      host_credentials: false
+      title: "浏览 115 目录树"
+      description: "读取目标账号的目录树。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/directories
+      category: 115
+      risk: read
+      title: "浏览 115 目录"
+      description: "读取目标账号的目录列表。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/offline/download-path
+      category: 115
+      risk: read
+      title: "查询默认离线目录"
+      description: "查询目标账号的默认离线目录。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/offline/quota
+      category: 115
+      risk: read
+      title: "查询离线额度"
+      description: "查询目标账号的离线配额。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/offline/tasks
+      category: 115
+      risk: read
+      title: "查询离线任务"
+      description: "查询目标账号的离线任务。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/recyclebin
+      category: 115
+      risk: read
+      title: "读取回收站"
+      description: "读取目标账号的回收站列表。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/share-notlogin-quota
+      category: 115
+      risk: read
+      title: "查询免登录转存额度"
+      description: "查询目标账号的免登录转存配额。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/shares
+      category: 115
+      risk: read
+      title: "列出分享链接"
+      description: "读取目标账号创建的分享列表。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/shares/:share_code
+      category: 115
+      risk: read
+      title: "读取分享详情"
+      description: "读取一条分享的详情。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/shares/:share_code/access-users
+      category: 115
+      risk: read
+      title: "读取分享领取记录"
+      description: "读取一条分享的领取用户记录。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/shares/:share_code/download-details
+      category: 115
+      risk: read
+      title: "读取分享下载明细"
+      description: "读取一条分享的下载明细。"
+      host_credentials: true
+    - method: GET
+      path: /api/115/status
+      category: 115
+      risk: read
+      title: "查询 115 账号状态"
+      description: "读取目标账号的在线状态。"
+      host_credentials: true
     - method: GET
       path: /api/browse
       category: cd2
       risk: read
-      title: 浏览 CD2
-      description: 通过宿主已配置的 CD2 gRPC 连接浏览目录。
+      title: "浏览 CD2"
+      description: "通过宿主已配置的 CD2 gRPC 连接浏览目录。"
       host_credentials: true
     - method: GET
       path: /api/cd2/clouds
       category: cd2
       risk: read
-      title: 列出 CD2 云盘
-      description: 读取宿主配置中可用的 CD2 云盘名称。
+      title: "列出 CD2 云盘"
+      description: "读取宿主配置中可用的 CD2 云盘名称。"
       host_credentials: true
     - method: GET
-      path: /api/plugin-host/emby/instances
+      path: /api/dashboard/emby-latest
+      category: dashboard
+      risk: read
+      title: "读取看板最新媒体"
+      description: "读取看板最新入库媒体。"
+      host_credentials: false
+    - method: GET
+      path: /api/dashboard/library
+      category: dashboard
+      risk: read
+      title: "读取看板媒体库"
+      description: "读取看板媒体库视图。"
+      host_credentials: false
+    - method: GET
+      path: /api/dashboard/quick-stats
+      category: dashboard
+      risk: read
+      title: "读取看板快报"
+      description: "读取看板快速统计。"
+      host_credentials: false
+    - method: GET
+      path: /api/dashboard/resource-center-stats
+      category: dashboard
+      risk: read
+      title: "读取资源中心统计"
+      description: "读取资源中心统计。"
+      host_credentials: false
+    - method: GET
+      path: /api/dashboard/stats
+      category: dashboard
+      risk: read
+      title: "读取看板统计"
+      description: "读取看板汇总统计。"
+      host_credentials: false
+    - method: GET
+      path: /api/dashboard/sync-chart
+      category: dashboard
+      risk: read
+      title: "读取同步图表"
+      description: "读取同步趋势图表数据。"
+      host_credentials: false
+    - method: GET
+      path: /api/emby-control/libraries
       category: emby
       risk: read
-      title: 列出 Emby 实例
-      description: 列出可供插件选择的已启用 Emby 实例，不返回服务器地址或 API Key。
+      title: "读取 Emby 控制媒体库"
+      description: "读取 Emby 媒体库及同步配置。"
+      host_credentials: true
+    - method: GET
+      path: /api/emby-control/status
+      category: emby
+      risk: read
+      title: "读取 Emby 控制状态"
+      description: "读取 Emby 控制模块状态。"
+      host_credentials: true
+    - method: GET
+      path: /api/history
+      category: history
+      risk: read
+      title: "读取操作历史"
+      description: "读取宿主操作历史记录。"
+      host_credentials: false
+    - method: GET
+      path: /api/history/stats
+      category: history
+      risk: read
+      title: "读取历史统计"
+      description: "读取操作历史统计。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-dirs
+      category: files
+      risk: read
+      title: "浏览可选目录"
+      description: "读取文件管理器可用目录。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-files
+      category: files
+      risk: read
+      title: "列出文件"
+      description: "列出本地挂载或 CD2 挂载目录中的文件。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-files/batch-status
+      category: files
+      risk: read
+      title: "查询文件任务"
+      description: "查询批量文件任务状态。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-files/organize-options
+      category: files
+      risk: read
+      title: "读取整理选项"
+      description: "读取可用的整理目标和规则。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-files/raw
+      category: files
+      risk: read
+      title: "读取文件内容"
+      description: "读取文件管理器中单个文件的内容（最大 10MB）。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-files/search
+      category: files
+      risk: read
+      title: "搜索文件"
+      description: "在文件管理器中按名称搜索文件。"
+      host_credentials: false
+    - method: GET
+      path: /api/local-files/tree
+      category: files
+      risk: read
+      title: "读取目录树"
+      description: "读取本地挂载或 CD2 挂载目录树。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/categories
+      category: organize
+      risk: read
+      title: "读取整理分类"
+      description: "读取整理分类列表。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/categories/:id
+      category: organize
+      risk: read
+      title: "读取整理分类详情"
+      description: "读取一个整理分类的详情。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/category-templates
+      category: organize
+      risk: read
+      title: "读取分类模板"
+      description: "读取整理分类模板。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/config
+      category: organize
+      risk: read
+      title: "读取整理配置"
+      description: "读取文件整理配置。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/history
+      category: organize
+      risk: read
+      title: "读取整理历史"
+      description: "读取文件整理历史。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/history/:id/detail
+      category: organize
+      risk: read
+      title: "读取整理详情"
+      description: "读取一条整理历史详情。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/history/:id/manual-organize-context
+      category: organize
+      risk: read
+      title: "读取手动整理上下文"
+      description: "读取一条历史记录的手动整理上下文。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/jobs/:job_id/progress
+      category: organize
+      risk: read
+      title: "读取整理进度"
+      description: "读取一个整理任务的进度。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/queue
+      category: organize
+      risk: read
+      title: "读取整理队列"
+      description: "读取待整理队列。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/rules
+      category: organize
+      risk: read
+      title: "读取整理规则"
+      description: "读取文件整理规则列表。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/template-variables
+      category: organize
+      risk: read
+      title: "读取模板变量"
+      description: "读取整理路径模板可用变量。"
+      host_credentials: false
+    - method: GET
+      path: /api/organize/tmdb-cache/stats
+      category: organize
+      risk: read
+      title: "读取 TMDB 缓存统计"
+      description: "读取整理模块的 TMDB 缓存统计。"
+      host_credentials: true
+    - method: GET
+      path: /api/organize/tmdb/search
+      category: organize
+      risk: read
+      title: "整理模块搜索 TMDB"
+      description: "使用宿主 TMDB 凭据搜索媒体。"
+      host_credentials: true
+    - method: GET
+      path: /api/organize/wash-version/default
+      category: organize
+      risk: read
+      title: "读取洗版默认配置"
+      description: "读取默认洗版配置。"
+      host_credentials: false
+    - method: GET
+      path: /api/plugin-host/accounts/115
+      category: "plugin-transfer"
+      risk: read
+      title: "列出 115 账号选项"
+      description: "列出当前插件可用的 115 账号选项。"
       host_credentials: true
     - method: GET
       path: /api/plugin-host/emby/episodes
       category: emby
       risk: read
-      title: 读取 Emby 缺集
-      description: 按实例、TMDB 剧集和季数读取已有集与缺集，不返回地址、密钥或路径。
+      title: "读取 Emby 缺集"
+      description: "按实例、TMDB 剧集和季数读取已有集与缺集，不返回地址、密钥或路径。"
       host_credentials: true
     - method: GET
-      path: /api/plugin-host/emby/stats
+      path: /api/plugin-host/emby/instances
       category: emby
       risk: read
-      title: 读取 Emby 统计
-      description: 读取选定 Emby 实例的媒体数量和在线统计。
-      host_credentials: true
-    - method: GET
-      path: /api/plugin-host/emby/libraries
-      category: emby
-      risk: read
-      title: 读取 Emby 媒体库
-      description: 读取选定 Emby 实例的媒体库名称和类型，不返回媒体路径。
+      title: "列出 Emby 实例"
+      description: "列出可供插件选择的已启用 Emby 实例，不返回服务器地址或 API Key。"
       host_credentials: true
     - method: GET
       path: /api/plugin-host/emby/items
       category: emby
       risk: read
-      title: 查询 Emby 媒体
-      description: 分页搜索或列出选定 Emby 实例中的安全媒体元数据。
+      title: "查询 Emby 媒体"
+      description: "分页搜索或列出选定 Emby 实例中的安全媒体元数据。"
       host_credentials: true
     - method: GET
       path: /api/plugin-host/emby/items/:id
       category: emby
       risk: read
-      title: 读取 Emby 媒体详情
-      description: 读取选定 Emby 实例中的一条安全媒体元数据。
+      title: "读取 Emby 媒体详情"
+      description: "读取选定 Emby 实例中的一条安全媒体元数据。"
+      host_credentials: true
+    - method: GET
+      path: /api/plugin-host/emby/libraries
+      category: emby
+      risk: read
+      title: "读取 Emby 媒体库"
+      description: "读取选定 Emby 实例的媒体库名称和类型，不返回媒体路径。"
+      host_credentials: true
+    - method: GET
+      path: /api/plugin-host/emby/stats
+      category: emby
+      risk: read
+      title: "读取 Emby 统计"
+      description: "读取选定 Emby 实例的媒体数量和在线统计。"
+      host_credentials: true
+    - method: GET
+      path: /api/plugin-host/files/entries
+      category: "plugin-files"
+      risk: read
+      title: "列出目录条目"
+      description: "按目录引用分页列出文件条目。"
+      host_credentials: false
+    - method: GET
+      path: /api/plugin-host/files/entries/:entry_ref
+      category: "plugin-files"
+      risk: read
+      title: "读取条目详情"
+      description: "读取一个文件条目的元数据。"
+      host_credentials: false
+    - method: GET
+      path: /api/plugin-host/files/entries/:entry_ref/content
+      category: "plugin-files"
+      risk: read
+      title: "读取文件内容"
+      description: "分页读取文件内容，支持 Range，单页最大 4MiB，可循环读取完整文件。"
+      host_credentials: false
+    - method: GET
+      path: /api/plugin-host/files/roots
+      category: "plugin-files"
+      risk: read
+      title: "列出插件文件根"
+      description: "列出当前插件可访问的本地与 CD2/AURA 挂载根目录。"
+      host_credentials: false
+    - method: GET
+      path: /api/plugin-host/jobs/:job_ref
+      category: "plugin-jobs"
+      risk: read
+      title: "查询插件任务"
+      description: "查询当前插件的一个异步任务状态。"
+      host_credentials: false
+    - method: GET
+      path: /api/plugin-host/transfers/115/offline-quota
+      category: "plugin-transfer"
+      risk: read
+      title: "查询离线配额"
+      description: "查询 115 离线配额。"
+      host_credentials: true
+    - method: GET
+      path: /api/plugin-host/transfers/115/offline-tasks
+      category: "plugin-transfer"
+      risk: read
+      title: "查询离线任务"
+      description: "查询 115 离线任务列表。"
+      host_credentials: true
+    - method: GET
+      path: /api/plugin-host/transfers/115/share-previews/:preview_ref/items
+      category: "plugin-transfer"
+      risk: read
+      title: "列出分享条目"
+      description: "列出分享预览中的条目。"
+      host_credentials: true
+    - method: GET
+      path: /api/plugin-host/transfers/115/targets
+      category: "plugin-transfer"
+      risk: read
+      title: "列出转存目标"
+      description: "列出 115 转存目标目录。"
       host_credentials: true
     - method: GET
       path: /api/plugin-runtime/storage/:key
-      category: plugin-runtime
+      category: "plugin-runtime"
       risk: read
-      title: 读取插件数据
-      description: 读取当前安装实例自己的持久化数据。
-      host_credentials: false
-    - method: PUT
-      path: /api/plugin-runtime/storage/:key
-      category: plugin-runtime
-      risk: write
-      title: 保存插件数据
-      description: 保存当前安装实例自己的持久化数据。
-      host_credentials: false
-    - method: DELETE
-      path: /api/plugin-runtime/storage/:key
-      category: plugin-runtime
-      risk: dangerous
-      title: 删除插件数据
-      description: 删除当前安装实例自己的持久化数据。
+      title: "读取插件数据"
+      description: "读取当前安装实例自己的持久化数据。"
       host_credentials: false
     - method: GET
       path: /api/plugin-runtime/watches
-      category: plugin-runtime/watch
+      category: "plugin-runtime/watch"
       risk: read
-      title: 查询目录监控
-      description: 读取当前插件创建的宿主目录监控任务。
+      title: "查询目录监控"
+      description: "读取当前插件创建的宿主目录监控任务。"
       host_credentials: false
-    - method: POST
-      path: /api/plugin-runtime/watches
-      category: plugin-runtime/watch
-      risk: write
-      title: 创建目录监控
-      description: 由宿主持久化轮询本地、CD2 或 115 目录，并向插件投递变化事件。
-      host_credentials: true
-    - method: PATCH
-      path: /api/plugin-runtime/watches/:watch_ref
-      category: plugin-runtime/watch
-      risk: write
-      title: 更新目录监控
-      description: 更新当前插件的监控周期、事件主题、递归或启停状态。
+    - method: GET
+      path: /api/rules
+      category: rules
+      risk: read
+      title: "读取同步规则"
+      description: "读取云盘同步规则列表。"
       host_credentials: false
-    - method: DELETE
-      path: /api/plugin-runtime/watches/:watch_ref
-      category: plugin-runtime/watch
-      risk: dangerous
-      title: 删除目录监控
-      description: 永久删除当前插件的一条目录监控及其游标。
+    - method: GET
+      path: /api/rules/:id/tree/stats
+      category: rules
+      risk: read
+      title: "读取规则目录统计"
+      description: "读取一条同步规则的目录树统计。"
       host_credentials: false
-    - method: POST
-      path: /api/plugin-runtime/watches/:watch_ref/retry
-      category: plugin-runtime/watch
-      risk: write
-      title: 重试目录事件
-      description: 立即重试最近待投递或进入死信的目录变化事件。
-      host_credentials: true
-    - method: POST
-      path: /api/plugin-runtime/watches/:watch_ref/resync
-      category: plugin-runtime/watch
-      risk: dangerous
-      title: 重建目录监控基线
-      description: 清空监控游标并从当前目录状态重新建立基线。
-      host_credentials: true
+    - method: GET
+      path: /api/scheduler/jobs
+      category: scheduler
+      risk: read
+      title: "读取宿主任务"
+      description: "读取宿主定时任务列表。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/air-calendar
+      category: subscriptions
+      risk: read
+      title: "读取追剧日历"
+      description: "读取订阅播出日历。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/entry-settings
+      category: subscriptions
+      risk: read
+      title: "读取订阅入口设置"
+      description: "读取订阅入口设置。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/history
+      category: subscriptions
+      risk: read
+      title: "读取订阅历史"
+      description: "读取订阅执行历史。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/library-settings
+      category: subscriptions
+      risk: read
+      title: "读取媒体库订阅设置"
+      description: "读取媒体库订阅设置。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/pool/intents
+      category: subscriptions
+      risk: read
+      title: "查询聚合订阅"
+      description: "读取聚合订阅意图。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/pool/intents/:id
+      category: subscriptions
+      risk: read
+      title: "读取聚合订阅"
+      description: "读取一条聚合订阅意图。"
+      host_credentials: false
+    - method: GET
+      path: /api/subscribe/pt-search-site-selection
+      category: subscriptions
+      risk: read
+      title: "读取订阅站点选择"
+      description: "读取订阅搜索使用的站点选择。"
+      host_credentials: false
     - method: GET
       path: /api/subscribe/records
       category: subscriptions
       risk: read
-      title: 查询订阅记录
-      description: 读取宿主订阅记录。
+      title: "查询订阅记录"
+      description: "读取宿主订阅记录。"
       host_credentials: false
     - method: GET
-      path: /api/subscribe/pool/intents
-      category: subscriptions
+      path: /api/tasks
+      category: tasks
       risk: read
-      title: 查询聚合订阅
-      description: 读取聚合订阅意图。
-      host_credentials: false
-    - method: POST
-      path: /api/subscribe/pool/intents
-      category: subscriptions
-      risk: write
-      title: 创建聚合订阅
-      description: 创建聚合订阅意图。
+      title: "列出后台任务"
+      description: "读取宿主后台任务列表。"
       host_credentials: false
     - method: GET
-      path: /api/subscribe/pool/intents/:id
-      category: subscriptions
+      path: /api/tasks/:id
+      category: tasks
       risk: read
-      title: 读取聚合订阅
-      description: 读取一条聚合订阅意图。
+      title: "读取任务详情"
+      description: "读取一个后台任务的详情。"
       host_credentials: false
-    - method: PATCH
-      path: /api/subscribe/pool/intents/:id/episodes
-      category: subscriptions
-      risk: write
-      title: 更新订阅集数
-      description: 更新聚合订阅需要的集数。
-      host_credentials: false
-    - method: DELETE
-      path: /api/subscribe/pool/intents/:id
-      category: subscriptions
-      risk: dangerous
-      title: 取消聚合订阅
-      description: 取消一条聚合订阅意图。
-      host_credentials: false
-    - method: POST
-      path: /api/notifications/plugin
-      category: notifications
-      risk: write
-      title: 发送插件通知
-      description: 通过宿主 Telegram 通知配置反馈插件任务结果。
-      host_credentials: true
-    - method: GET
-      path: /api/tmdb/search
-      category: tmdb
-      risk: read
-      title: 搜索 TMDB
-      description: 搜索电影、剧集和人物。
-      host_credentials: true
-    - method: GET
-      path: /api/tmdb/movie/:id
-      category: tmdb
-      risk: read
-      title: 查询 TMDB 电影
-      description: 读取电影详情。
-      host_credentials: true
-    - method: GET
-      path: /api/tmdb/tv/:id
-      category: tmdb
-      risk: read
-      title: 查询 TMDB 剧集
-      description: 读取剧集详情和季度信息。
-      host_credentials: true
-    - method: GET
-      path: /api/tmdb/trending
-      category: tmdb
-      risk: read
-      title: 查询 TMDB 趋势
-      description: 读取电影或剧集趋势。
-      host_credentials: true
     - method: GET
       path: /api/tmdb/discover/movie
       category: tmdb
       risk: read
-      title: 发现 TMDB 电影
-      description: 按条件发现电影。
+      title: "发现 TMDB 电影"
+      description: "按条件发现电影。"
       host_credentials: true
     - method: GET
       path: /api/tmdb/discover/tv
       category: tmdb
       risk: read
-      title: 发现 TMDB 剧集
-      description: 按条件发现剧集。
+      title: "发现 TMDB 剧集"
+      description: "按条件发现剧集。"
       host_credentials: true
     - method: GET
       path: /api/tmdb/genres
       category: tmdb
       risk: read
-      title: 查询 TMDB 类型
-      description: 读取电影和剧集类型。
+      title: "查询 TMDB 类型"
+      description: "读取电影和剧集类型。"
       host_credentials: true
+    - method: GET
+      path: /api/tmdb/movie/:id
+      category: tmdb
+      risk: read
+      title: "查询 TMDB 电影"
+      description: "读取电影详情。"
+      host_credentials: true
+    - method: GET
+      path: /api/tmdb/search
+      category: tmdb
+      risk: read
+      title: "搜索 TMDB"
+      description: "搜索电影、剧集和人物。"
+      host_credentials: true
+    - method: GET
+      path: /api/tmdb/trending
+      category: tmdb
+      risk: read
+      title: "查询 TMDB 趋势"
+      description: "读取电影或剧集趋势。"
+      host_credentials: true
+    - method: GET
+      path: /api/tmdb/tv/:id
+      category: tmdb
+      risk: read
+      title: "查询 TMDB 剧集"
+      description: "读取剧集详情和季度信息。"
+      host_credentials: true
+    - method: GET
+      path: /api/workqueue/stats
+      category: tasks
+      risk: read
+      title: "读取工作队列统计"
+      description: "读取宿主工作队列统计。"
+      host_credentials: false
+    - method: PATCH
+      path: /api/plugin-host/files/entries/:entry_ref
+      category: "plugin-files"
+      risk: dangerous
+      title: "重命名条目"
+      description: "重命名一个文件或目录条目。"
+      host_credentials: false
+    - method: PATCH
+      path: /api/plugin-runtime/watches/:watch_ref
+      category: "plugin-runtime/watch"
+      risk: write
+      title: "更新目录监控"
+      description: "更新当前插件的监控周期、事件主题、递归或启停状态。"
+      host_credentials: false
+    - method: PATCH
+      path: /api/subscribe/pool/intents/:id/episodes
+      category: subscriptions
+      risk: write
+      title: "更新订阅集数"
+      description: "更新聚合订阅需要的集数。"
+      host_credentials: false
+    - method: POST
+      path: /api/115/offline/add
+      category: 115
+      risk: write
+      title: "创建离线任务"
+      description: "将磁力、ED2K 或其他离线地址添加到指定目录。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/offline/clear
+      category: 115
+      risk: dangerous
+      title: "清理离线任务"
+      description: "批量清理目标账号中的离线任务。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/offline/delete
+      category: 115
+      risk: dangerous
+      title: "删除离线任务"
+      description: "删除目标账号中的离线任务。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/offline/pause
+      category: 115
+      risk: write
+      title: "暂停离线任务"
+      description: "暂停目标账号的离线任务。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/offline/restart
+      category: 115
+      risk: write
+      title: "重试离线任务"
+      description: "重新提交一个离线任务。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/offline/resume
+      category: 115
+      risk: write
+      title: "恢复离线任务"
+      description: "恢复目标账号的离线任务。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/recyclebin/clear
+      category: 115
+      risk: dangerous
+      title: "清空回收站"
+      description: "清空目标账号的回收站。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/recyclebin/delete
+      category: 115
+      risk: dangerous
+      title: "彻底删除回收站文件"
+      description: "从回收站彻底删除文件。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/recyclebin/revert
+      category: 115
+      risk: write
+      title: "还原回收站文件"
+      description: "还原回收站中的文件。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/share/receive
+      category: 115
+      risk: write
+      title: "转存 115 分享"
+      description: "将 115 分享链接转存到目标账号的指定目录。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/shares/:share_code/activate
+      category: 115
+      risk: write
+      title: "激活分享"
+      description: "激活一条分享。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/shares/:share_code/renew
+      category: 115
+      risk: write
+      title: "续期分享"
+      description: "续期一条分享。"
+      host_credentials: true
+    - method: POST
+      path: /api/115/shares/:share_code/update
+      category: 115
+      risk: write
+      title: "更新分享设置"
+      description: "更新一条分享的有效期等设置。"
+      host_credentials: true
+    - method: POST
+      path: /api/emby-control/items/:id/refresh
+      category: emby
+      risk: write
+      title: "刷新 Emby 媒体"
+      description: "刷新一个 Emby 媒体的元数据。"
+      host_credentials: true
+    - method: POST
+      path: /api/emby-control/library/refresh
+      category: emby
+      risk: write
+      title: "刷新 Emby 媒体库"
+      description: "刷新 Emby 媒体库。"
+      host_credentials: true
+    - method: POST
+      path: /api/library/check-owned
+      category: files
+      risk: read
+      title: "检查媒体库是否已存在"
+      description: "按 TMDB 信息检查媒体是否已入库。"
+      host_credentials: true
+    - method: POST
+      path: /api/local-files/batch
+      category: files
+      risk: dangerous
+      title: "批量管理文件"
+      description: "批量复制、移动或删除文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/copy
+      category: files
+      risk: write
+      title: "复制文件"
+      description: "按宿主规则在本地挂载或 CD2 之间复制文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/mkdir
+      category: files
+      risk: write
+      title: "创建目录"
+      description: "在文件管理器中创建目录。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/move
+      category: files
+      risk: dangerous
+      title: "移动文件"
+      description: "按宿主规则在本地挂载或 CD2 之间移动文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/organize
+      category: files
+      risk: dangerous
+      title: "整理文件"
+      description: "调用宿主文件整理能力。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/recognize
+      category: files
+      risk: write
+      title: "识别媒体文件"
+      description: "调用宿主识别能力分析文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/rename
+      category: files
+      risk: dangerous
+      title: "重命名文件"
+      description: "重命名文件或目录。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/rename/execute
+      category: files
+      risk: dangerous
+      title: "执行批量重命名"
+      description: "执行批量重命名。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/rename/preview
+      category: files
+      risk: read
+      title: "预览重命名"
+      description: "预览批量重命名结果。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/scrape
+      category: files
+      risk: write
+      title: "刮削文件"
+      description: "调用宿主刮削能力处理文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/local-files/upload
+      category: "files-upload"
+      risk: write
+      title: "上传文件"
+      description: "以 multipart 表单上传文件到文件管理器目录。"
+      host_credentials: false
+    - method: POST
+      path: /api/notifications/plugin
+      category: notifications
+      risk: write
+      title: "发送插件通知"
+      description: "通过宿主 Telegram 通知配置反馈插件任务结果。"
+      host_credentials: true
+    - method: POST
+      path: /api/organize/history/:id/manual-organize
+      category: organize
+      risk: write
+      title: "手动整理"
+      description: "对一条历史记录执行手动整理。"
+      host_credentials: false
+    - method: POST
+      path: /api/organize/history/:id/rename-source
+      category: organize
+      risk: write
+      title: "重命名整理来源"
+      description: "修正一条历史记录的来源名称。"
+      host_credentials: false
+    - method: POST
+      path: /api/organize/retry-failed
+      category: organize
+      risk: write
+      title: "重试失败整理"
+      description: "重试失败的整理任务。"
+      host_credentials: false
+    - method: POST
+      path: /api/organize/rules
+      category: organize
+      risk: write
+      title: "创建整理规则"
+      description: "创建文件整理规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/organize/rules/:id/scan
+      category: organize
+      risk: write
+      title: "扫描整理规则"
+      description: "扫描一条整理规则的待处理文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/organize/rules/:id/submit
+      category: organize
+      risk: write
+      title: "提交整理任务"
+      description: "提交一条整理规则的执行任务。"
+      host_credentials: false
+    - method: POST
+      path: /api/organize/rules/:id/trigger
+      category: organize
+      risk: write
+      title: "触发整理规则"
+      description: "立即执行一条整理规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/plugin-host/accounts/115/selections
+      category: "plugin-transfer"
+      risk: write
+      title: "创建账号选择"
+      description: "创建一个有有效期的 115 账号选择引用。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-host/files/directories
+      category: "plugin-files"
+      risk: write
+      title: "创建目录"
+      description: "在可写根目录下创建目录。"
+      host_credentials: false
+    - method: POST
+      path: /api/plugin-host/files/downloads
+      category: "plugin-files"
+      risk: write
+      title: "下载文件到目录"
+      description: "把远程文件流式下载到指定本地可写目录（排除 CD2/AURA 挂载），返回任务引用。"
+      host_credentials: false
+    - method: POST
+      path: /api/plugin-host/files/operations
+      category: "plugin-files"
+      risk: dangerous
+      title: "复制或移动"
+      description: "异步复制或移动文件条目，返回任务引用。"
+      host_credentials: false
+    - method: POST
+      path: /api/plugin-host/jobs/:job_ref/cancel
+      category: "plugin-jobs"
+      risk: write
+      title: "取消插件任务"
+      description: "取消当前插件的一个异步任务。"
+      host_credentials: false
+    - method: POST
+      path: /api/plugin-host/transfers/115/offline-downloads
+      category: "plugin-transfer"
+      risk: write
+      title: "创建离线下载"
+      description: "向账号选择指向的账号提交离线下载。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-host/transfers/115/share-previews
+      category: "plugin-transfer"
+      risk: read
+      title: "预览 115 分享"
+      description: "解析 115 分享链接并创建预览。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-host/transfers/115/share-receives
+      category: "plugin-transfer"
+      risk: write
+      title: "接收 115 分享"
+      description: "把 115 分享转存到账号选择指向的目录。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-host/transfers/115/targets
+      category: "plugin-transfer"
+      risk: write
+      title: "创建转存目标"
+      description: "创建 115 转存目标目录引用。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-runtime/watches
+      category: "plugin-runtime/watch"
+      risk: write
+      title: "创建目录监控"
+      description: "由宿主持久化轮询本地、CD2 或 115 目录，并向插件投递变化事件。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-runtime/watches/:watch_ref/resync
+      category: "plugin-runtime/watch"
+      risk: dangerous
+      title: "重建目录监控基线"
+      description: "清空监控游标并从当前目录状态重新建立基线。"
+      host_credentials: true
+    - method: POST
+      path: /api/plugin-runtime/watches/:watch_ref/retry
+      category: "plugin-runtime/watch"
+      risk: write
+      title: "重试目录事件"
+      description: "立即重试最近待投递或进入死信的目录变化事件。"
+      host_credentials: true
+    - method: POST
+      path: /api/rules
+      category: rules
+      risk: write
+      title: "创建同步规则"
+      description: "创建云盘同步规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/:id/clean-orphans
+      category: rules
+      risk: dangerous
+      title: "清理孤立文件"
+      description: "清理一条规则产生的孤立文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/:id/full-sync
+      category: rules
+      risk: write
+      title: "全量同步规则"
+      description: "全量执行一条同步规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/:id/generate-strm
+      category: rules
+      risk: write
+      title: "生成 STRM"
+      description: "为一条同步规则生成 STRM 文件。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/:id/sync
+      category: rules
+      risk: write
+      title: "同步规则"
+      description: "执行一条同步规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/:id/sync-metadata
+      category: rules
+      risk: write
+      title: "同步元数据"
+      description: "同步一条规则的元数据。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/:id/toggle
+      category: rules
+      risk: write
+      title: "启停同步规则"
+      description: "启用或停用一条同步规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/rules/sync-all
+      category: rules
+      risk: write
+      title: "同步全部规则"
+      description: "执行全部同步规则。"
+      host_credentials: false
+    - method: POST
+      path: /api/scheduler/jobs/trigger
+      category: scheduler
+      risk: write
+      title: "触发宿主任务"
+      description: "立即触发一个宿主定时任务。"
+      host_credentials: false
+    - method: POST
+      path: /api/subscribe/batch-delete
+      category: subscriptions
+      risk: dangerous
+      title: "批量删除订阅"
+      description: "批量删除订阅记录。"
+      host_credentials: false
+    - method: POST
+      path: /api/subscribe/delete-by-media
+      category: subscriptions
+      risk: dangerous
+      title: "按媒体删除订阅"
+      description: "按媒体删除订阅记录。"
+      host_credentials: false
+    - method: POST
+      path: /api/subscribe/pool/intents
+      category: subscriptions
+      risk: write
+      title: "创建聚合订阅"
+      description: "创建聚合订阅意图。"
+      host_credentials: false
+    - method: POST
+      path: /api/tasks/:id/cancel
+      category: tasks
+      risk: write
+      title: "取消任务"
+      description: "取消一个后台任务。"
+      host_credentials: false
+    - method: PUT
+      path: /api/organize/rules/:id
+      category: organize
+      risk: write
+      title: "更新整理规则"
+      description: "更新一条整理规则。"
+      host_credentials: false
+    - method: PUT
+      path: /api/plugin-host/files/entries/:entry_ref/content
+      category: "plugin-files"
+      risk: write
+      title: "写入文件内容"
+      description: "按偏移写入本地文件内容，单次最大 4MiB。"
+      host_credentials: false
+    - method: PUT
+      path: /api/plugin-runtime/storage/:key
+      category: "plugin-runtime"
+      risk: write
+      title: "保存插件数据"
+      description: "保存当前安装实例自己的持久化数据。"
+      host_credentials: false
+    - method: PUT
+      path: /api/rules/:id
+      category: rules
+      risk: write
+      title: "更新同步规则"
+      description: "更新一条同步规则。"
+      host_credentials: false
+    - method: PUT
+      path: /api/subscribe/entry-settings
+      category: subscriptions
+      risk: write
+      title: "更新订阅入口设置"
+      description: "更新订阅入口设置。"
+      host_credentials: false
+    - method: PUT
+      path: /api/subscribe/library-settings
+      category: subscriptions
+      risk: write
+      title: "更新媒体库订阅设置"
+      description: "更新媒体库订阅设置。"
+      host_credentials: false
+    - method: PUT
+      path: /api/subscribe/pt-search-site-selection
+      category: subscriptions
+      risk: write
+      title: "更新订阅站点选择"
+      description: "更新订阅搜索使用的站点选择。"
+      host_credentials: false
 x-dian115-subscription-host-apis:
   description: 订阅安全接口目录；完整开放下列操作，不包含 PT Cookie、API Key、Token、passkey、私密 RSS 地址或下载器凭据。
   entries:
@@ -1277,44 +2047,6 @@ paths:
           $ref: '#/components/responses/HostError'
         default:
           $ref: '#/components/responses/HostError'
-  /api/plugin-host/emby/episodes:
-    get:
-      tags: [Direct Host APIs]
-      summary: 读取 Emby 缺集
-      description: 严格读取所选实例的 TMDB 剧集和季数。total_episodes 为 TMDB 季总集数，宿主应用集数修正规则；查询失败不会返回整季全缺。返回快照仅供预览，创建固定范围订阅时宿主重新检测覆盖情况。
-      operationId: directHost_pluginEmbyEpisodes
-      x-dian115-category: emby
-      x-dian115-risk: read
-      x-dian115-host-credentials: true
-      x-dian115-in-process-only: true
-      parameters:
-        - $ref: '#/components/parameters/EmbyProxyID'
-        - name: tmdb_id
-          in: query
-          required: true
-          schema: {type: integer, minimum: 1, maximum: 2147483647}
-        - name: season
-          in: query
-          schema: {type: integer, minimum: 0, maximum: 1000, default: 1}
-        - name: total_episodes
-          in: query
-          required: true
-          schema: {type: integer, minimum: 1, maximum: 10000}
-      responses:
-        '200':
-          description: 所选实例的季覆盖快照
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PluginEmbyEpisodeCoverage'
-        '400':
-          $ref: '#/components/responses/HostError'
-        '409':
-          $ref: '#/components/responses/HostError'
-        '502':
-          $ref: '#/components/responses/HostError'
-        '503':
-          $ref: '#/components/responses/HostError'
   /api/plugin-host/emby/stats:
     get:
       tags:
@@ -2138,6 +2870,2725 @@ paths:
           $ref: '#/components/responses/HostError'
         default:
           $ref: '#/components/responses/HostError'
+  /api/115/browse-dirs:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 浏览 115 目录树
+      description: 读取目标账号的目录树。
+      operationId: directHost_c83645ad16c7585f
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/offline/pause:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 暂停离线任务
+      description: 暂停目标账号的离线任务。
+      operationId: directHost_2d01676990618b61
+      x-dian115-category: "115"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/offline/resume:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 恢复离线任务
+      description: 恢复目标账号的离线任务。
+      operationId: directHost_d6c770ebb4a5f5bc
+      x-dian115-category: "115"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/recyclebin:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取回收站
+      description: 读取目标账号的回收站列表。
+      operationId: directHost_164ca8627cc7e176
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/recyclebin/clear:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 清空回收站
+      description: 清空目标账号的回收站。
+      operationId: directHost_ceb02f4096baac33
+      x-dian115-category: "115"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/recyclebin/delete:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 彻底删除回收站文件
+      description: 从回收站彻底删除文件。
+      operationId: directHost_e6123454d53a53e4
+      x-dian115-category: "115"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/recyclebin/revert:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 还原回收站文件
+      description: 还原回收站中的文件。
+      operationId: directHost_2a4719ce6edc0635
+      x-dian115-category: "115"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/share-notlogin-quota:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 查询免登录转存额度
+      description: 查询目标账号的免登录转存配额。
+      operationId: directHost_e5c8306b9cc9050b
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 列出分享链接
+      description: 读取目标账号创建的分享列表。
+      operationId: directHost_959ac2c13e360cbb
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}:
+    delete:
+      tags:
+        - Direct Host APIs
+      summary: 删除分享
+      description: 删除一条分享链接。
+      operationId: directHost_35bf1e56826d86ef
+      x-dian115-category: "115"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取分享详情
+      description: 读取一条分享的详情。
+      operationId: directHost_65932b8cc94d7e1b
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}/access-users:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取分享领取记录
+      description: 读取一条分享的领取用户记录。
+      operationId: directHost_3089cedc14fe1bce
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}/activate:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 激活分享
+      description: 激活一条分享。
+      operationId: directHost_f5733c1311491e79
+      x-dian115-category: "115"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}/download-details:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取分享下载明细
+      description: 读取一条分享的下载明细。
+      operationId: directHost_44df07acda045ba1
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}/renew:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 续期分享
+      description: 续期一条分享。
+      operationId: directHost_1b363fe9d1aab797
+      x-dian115-category: "115"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/shares/{share_code}/update:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 更新分享设置
+      description: 更新一条分享的有效期等设置。
+      operationId: directHost_4fd6edb5019380a6
+      x-dian115-category: "115"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: share_code
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/115/status:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 查询 115 账号状态
+      description: 读取目标账号的在线状态。
+      operationId: directHost_22e08996d3784dbd
+      x-dian115-category: "115"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/dashboard/emby-latest:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取看板最新媒体
+      description: 读取看板最新入库媒体。
+      operationId: directHost_f46dd68b5698dd38
+      x-dian115-category: "dashboard"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/dashboard/library:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取看板媒体库
+      description: 读取看板媒体库视图。
+      operationId: directHost_392a4ad019a94f78
+      x-dian115-category: "dashboard"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/dashboard/quick-stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取看板快报
+      description: 读取看板快速统计。
+      operationId: directHost_e4bff3ae8d027ce0
+      x-dian115-category: "dashboard"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/dashboard/resource-center-stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取资源中心统计
+      description: 读取资源中心统计。
+      operationId: directHost_f35cff8a2073dd8e
+      x-dian115-category: "dashboard"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/dashboard/stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取看板统计
+      description: 读取看板汇总统计。
+      operationId: directHost_dcfe0e5a4d3d3989
+      x-dian115-category: "dashboard"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/dashboard/sync-chart:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取同步图表
+      description: 读取同步趋势图表数据。
+      operationId: directHost_0df1813b54d21273
+      x-dian115-category: "dashboard"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/emby-control/items/{id}/refresh:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 刷新 Emby 媒体
+      description: 刷新一个 Emby 媒体的元数据。
+      operationId: directHost_9cd96f8f3bb98eea
+      x-dian115-category: "emby"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/emby-control/libraries:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取 Emby 控制媒体库
+      description: 读取 Emby 媒体库及同步配置。
+      operationId: directHost_95794a5119689700
+      x-dian115-category: "emby"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/emby-control/library/refresh:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 刷新 Emby 媒体库
+      description: 刷新 Emby 媒体库。
+      operationId: directHost_f30f89dd0bfc271c
+      x-dian115-category: "emby"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/emby-control/status:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取 Emby 控制状态
+      description: 读取 Emby 控制模块状态。
+      operationId: directHost_d248783f1bcd3a4c
+      x-dian115-category: "emby"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/history:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取操作历史
+      description: 读取宿主操作历史记录。
+      operationId: directHost_0fb93f0106584f01
+      x-dian115-category: "history"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/history/stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取历史统计
+      description: 读取操作历史统计。
+      operationId: directHost_198246df679f6192
+      x-dian115-category: "history"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/library/check-owned:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 检查媒体库是否已存在
+      description: 按 TMDB 信息检查媒体是否已入库。
+      operationId: directHost_8fc3ecfe639373f3
+      x-dian115-category: "files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/local-files/raw:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取文件内容
+      description: 读取文件管理器中单个文件的内容（最大 10MB）。
+      operationId: directHost_d8c701d929f19ce3
+      x-dian115-category: "files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/local-files/rename/execute:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 执行批量重命名
+      description: 执行批量重命名。
+      operationId: directHost_d76236d421369dbc
+      x-dian115-category: "files"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/local-files/rename/preview:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 预览重命名
+      description: 预览批量重命名结果。
+      operationId: directHost_0d2d7784303f4a8e
+      x-dian115-category: "files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/local-files/scrape:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 刮削文件
+      description: 调用宿主刮削能力处理文件。
+      operationId: directHost_596a33179efb0db2
+      x-dian115-category: "files"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/local-files/search:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 搜索文件
+      description: 在文件管理器中按名称搜索文件。
+      operationId: directHost_0882e45b093ce597
+      x-dian115-category: "files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/local-files/upload:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 上传文件
+      description: 以 multipart 表单上传文件到文件管理器目录。
+      operationId: directHost_69ddd52af9a573a4
+      x-dian115-category: "files-upload"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/categories:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理分类
+      description: 读取整理分类列表。
+      operationId: directHost_27f41ab6312adfbc
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/categories/{id}:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理分类详情
+      description: 读取一个整理分类的详情。
+      operationId: directHost_e4749ea405cdd431
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/category-templates:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取分类模板
+      description: 读取整理分类模板。
+      operationId: directHost_54e54f8d51a9f4c0
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/config:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理配置
+      description: 读取文件整理配置。
+      operationId: directHost_783351e2fac689da
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/history:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理历史
+      description: 读取文件整理历史。
+      operationId: directHost_a44718ebb6f15764
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/history/{id}:
+    delete:
+      tags:
+        - Direct Host APIs
+      summary: 删除整理历史
+      description: 删除一条整理历史记录。
+      operationId: directHost_9245e41876fcdaf9
+      x-dian115-category: "organize"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/history/{id}/detail:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理详情
+      description: 读取一条整理历史详情。
+      operationId: directHost_045843aff5a15973
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/history/{id}/manual-organize:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 手动整理
+      description: 对一条历史记录执行手动整理。
+      operationId: directHost_fc481e0e131b8e34
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/history/{id}/manual-organize-context:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取手动整理上下文
+      description: 读取一条历史记录的手动整理上下文。
+      operationId: directHost_80487fe2665bc579
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/history/{id}/rename-source:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 重命名整理来源
+      description: 修正一条历史记录的来源名称。
+      operationId: directHost_c636b2c87e28f2ce
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/jobs/{job_id}/progress:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理进度
+      description: 读取一个整理任务的进度。
+      operationId: directHost_65ce9b5f0f1de832
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/queue:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理队列
+      description: 读取待整理队列。
+      operationId: directHost_9ebc6e8f27114d73
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/retry-failed:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 重试失败整理
+      description: 重试失败的整理任务。
+      operationId: directHost_3d8103c191adb930
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取整理规则
+      description: 读取文件整理规则列表。
+      operationId: directHost_0b7dfa6132e5362b
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 创建整理规则
+      description: 创建文件整理规则。
+      operationId: directHost_b0ea6af54c26c8ed
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules/{id}:
+    delete:
+      tags:
+        - Direct Host APIs
+      summary: 删除整理规则
+      description: 删除一条整理规则。
+      operationId: directHost_bb5db82526d2a01b
+      x-dian115-category: "organize"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules/{id}:
+    put:
+      tags:
+        - Direct Host APIs
+      summary: 更新整理规则
+      description: 更新一条整理规则。
+      operationId: directHost_775144597860c2c9
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules/{id}/scan:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 扫描整理规则
+      description: 扫描一条整理规则的待处理文件。
+      operationId: directHost_f51d2853dc5b5133
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules/{id}/submit:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 提交整理任务
+      description: 提交一条整理规则的执行任务。
+      operationId: directHost_d835c2f5dc9d9e1d
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/rules/{id}/trigger:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 触发整理规则
+      description: 立即执行一条整理规则。
+      operationId: directHost_99c748c175ae9fc5
+      x-dian115-category: "organize"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/template-variables:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取模板变量
+      description: 读取整理路径模板可用变量。
+      operationId: directHost_dcd2e159046607cd
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/tmdb-cache/stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取 TMDB 缓存统计
+      description: 读取整理模块的 TMDB 缓存统计。
+      operationId: directHost_866ff4431b5e97d5
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/tmdb/search:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 整理模块搜索 TMDB
+      description: 使用宿主 TMDB 凭据搜索媒体。
+      operationId: directHost_3db10c0e595bd447
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/organize/wash-version/default:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取洗版默认配置
+      description: 读取默认洗版配置。
+      operationId: directHost_90842aefb3537b09
+      x-dian115-category: "organize"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/emby/episodes:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取 Emby 缺集
+      description: 按实例、TMDB 剧集和季数读取已有集与缺集，不返回地址、密钥或路径。
+      operationId: directHost_90694ce0f0641192
+      x-dian115-category: "emby"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取同步规则
+      description: 读取云盘同步规则列表。
+      operationId: directHost_6cd58c8b5fbcf344
+      x-dian115-category: "rules"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 创建同步规则
+      description: 创建云盘同步规则。
+      operationId: directHost_2fc7ee36b270cfd5
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}:
+    delete:
+      tags:
+        - Direct Host APIs
+      summary: 删除同步规则
+      description: 删除一条同步规则。
+      operationId: directHost_f60360f7ac4e3ba1
+      x-dian115-category: "rules"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}:
+    put:
+      tags:
+        - Direct Host APIs
+      summary: 更新同步规则
+      description: 更新一条同步规则。
+      operationId: directHost_68018af94d4c5870
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/clean-orphans:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 清理孤立文件
+      description: 清理一条规则产生的孤立文件。
+      operationId: directHost_0f56d346712b45f1
+      x-dian115-category: "rules"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/full-sync:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 全量同步规则
+      description: 全量执行一条同步规则。
+      operationId: directHost_ecec47038bf3dcbb
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/generate-strm:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 生成 STRM
+      description: 为一条同步规则生成 STRM 文件。
+      operationId: directHost_91c2303d06c33868
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/sync:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 同步规则
+      description: 执行一条同步规则。
+      operationId: directHost_31821e342a8bfd0b
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/sync-metadata:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 同步元数据
+      description: 同步一条规则的元数据。
+      operationId: directHost_db37690a72ee1738
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/toggle:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 启停同步规则
+      description: 启用或停用一条同步规则。
+      operationId: directHost_35f8985685638a3d
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/tree:
+    delete:
+      tags:
+        - Direct Host APIs
+      summary: 清空规则目录树
+      description: 清空一条同步规则已生成的目录树。
+      operationId: directHost_819cb86a420adf91
+      x-dian115-category: "rules"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/{id}/tree/stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取规则目录统计
+      description: 读取一条同步规则的目录树统计。
+      operationId: directHost_9f824f96cd0c9332
+      x-dian115-category: "rules"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/rules/sync-all:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 同步全部规则
+      description: 执行全部同步规则。
+      operationId: directHost_93e329c5b98c3838
+      x-dian115-category: "rules"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/scheduler/jobs:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取宿主任务
+      description: 读取宿主定时任务列表。
+      operationId: directHost_a4125564058d46b3
+      x-dian115-category: "scheduler"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/scheduler/jobs/trigger:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 触发宿主任务
+      description: 立即触发一个宿主定时任务。
+      operationId: directHost_5a5ebdb2420deea6
+      x-dian115-category: "scheduler"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/air-calendar:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取追剧日历
+      description: 读取订阅播出日历。
+      operationId: directHost_62e951f71871561f
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/batch-delete:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 批量删除订阅
+      description: 批量删除订阅记录。
+      operationId: directHost_ef36c2fd88b32928
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/delete-by-media:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 按媒体删除订阅
+      description: 按媒体删除订阅记录。
+      operationId: directHost_58abc7b24c9e9e3a
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/entry-settings:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取订阅入口设置
+      description: 读取订阅入口设置。
+      operationId: directHost_4de7b65ab7cc08fb
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/entry-settings:
+    put:
+      tags:
+        - Direct Host APIs
+      summary: 更新订阅入口设置
+      description: 更新订阅入口设置。
+      operationId: directHost_f523f62c84ce93f2
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/history:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取订阅历史
+      description: 读取订阅执行历史。
+      operationId: directHost_11c426a5b9581f9f
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/library-settings:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取媒体库订阅设置
+      description: 读取媒体库订阅设置。
+      operationId: directHost_1027b6214870c567
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/library-settings:
+    put:
+      tags:
+        - Direct Host APIs
+      summary: 更新媒体库订阅设置
+      description: 更新媒体库订阅设置。
+      operationId: directHost_073c5ab626db821e
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/pt-search-site-selection:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取订阅站点选择
+      description: 读取订阅搜索使用的站点选择。
+      operationId: directHost_a166350db3a154be
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/subscribe/pt-search-site-selection:
+    put:
+      tags:
+        - Direct Host APIs
+      summary: 更新订阅站点选择
+      description: 更新订阅搜索使用的站点选择。
+      operationId: directHost_d8a6cd9c97ce5f0f
+      x-dian115-category: "subscriptions"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/tasks:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 列出后台任务
+      description: 读取宿主后台任务列表。
+      operationId: directHost_5b1808fcdfb451f5
+      x-dian115-category: "tasks"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/tasks/{id}:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取任务详情
+      description: 读取一个后台任务的详情。
+      operationId: directHost_3e46c2a7e54a599d
+      x-dian115-category: "tasks"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/tasks/{id}/cancel:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: 取消任务
+      description: 取消一个后台任务。
+      operationId: directHost_f8eb6c666bd2c97f
+      x-dian115-category: "tasks"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/workqueue/stats:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: 读取工作队列统计
+      description: 读取宿主工作队列统计。
+      operationId: directHost_476f45f68bb9d574
+      x-dian115-category: "tasks"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/accounts/115:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "列出 115 账号选项"
+      description: "列出当前插件可用的 115 账号选项。"
+      operationId: directHost_48cfcb9df8edc14f
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/accounts/115/selections:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "创建账号选择"
+      description: "创建一个有有效期的 115 账号选择引用。"
+      operationId: directHost_0c5a485c213398eb
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/directories:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "创建目录"
+      description: "在可写根目录下创建目录。"
+      operationId: directHost_38972a942c912505
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/downloads:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "下载文件到目录"
+      description: "把远程文件流式下载到指定本地可写目录（排除 CD2/AURA 挂载），返回任务引用。"
+      operationId: directHost_a5e149917aa84cfc
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/entries:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "列出目录条目"
+      description: "按目录引用分页列出文件条目。"
+      operationId: directHost_3909264e607874c6
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/entries/{entry_ref}:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "读取条目详情"
+      description: "读取一个文件条目的元数据。"
+      operationId: directHost_fc54db40bc099566
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: entry_ref
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+    patch:
+      tags:
+        - Direct Host APIs
+      summary: "重命名条目"
+      description: "重命名一个文件或目录条目。"
+      operationId: directHost_fa8909c48708c3da
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: entry_ref
+          in: path
+          required: true
+          schema: {type: string}
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/entries/{entry_ref}/content:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "读取文件内容"
+      description: "分页读取文件内容，支持 Range，单页最大 4MiB，可循环读取完整文件。"
+      operationId: directHost_b3b95c6b775ced25
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: entry_ref
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+    put:
+      tags:
+        - Direct Host APIs
+      summary: "写入文件内容"
+      description: "按偏移写入本地文件内容，单次最大 4MiB。"
+      operationId: directHost_8bc74e240fbba61d
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: entry_ref
+          in: path
+          required: true
+          schema: {type: string}
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/operations:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "复制或移动"
+      description: "异步复制或移动文件条目，返回任务引用。"
+      operationId: directHost_703d86771c70fd76
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: dangerous
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/files/roots:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "列出插件文件根"
+      description: "列出当前插件可访问的本地与 CD2/AURA 挂载根目录。"
+      operationId: directHost_4fe29c3c96787126
+      x-dian115-category: "plugin-files"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/jobs/{job_ref}:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "查询插件任务"
+      description: "查询当前插件的一个异步任务状态。"
+      operationId: directHost_33f2fd698eddc912
+      x-dian115-category: "plugin-jobs"
+      x-dian115-risk: read
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: job_ref
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/jobs/{job_ref}/cancel:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "取消插件任务"
+      description: "取消当前插件的一个异步任务。"
+      operationId: directHost_37eed51c2930cab4
+      x-dian115-category: "plugin-jobs"
+      x-dian115-risk: write
+      x-dian115-host-credentials: false
+      x-dian115-in-process-only: true
+      parameters:
+        - name: job_ref
+          in: path
+          required: true
+          schema: {type: string}
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/offline-downloads:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "创建离线下载"
+      description: "向账号选择指向的账号提交离线下载。"
+      operationId: directHost_acd9c7c785cfc9eb
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/offline-quota:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "查询离线配额"
+      description: "查询 115 离线配额。"
+      operationId: directHost_c54ba99df8d134ff
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/offline-tasks:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "查询离线任务"
+      description: "查询 115 离线任务列表。"
+      operationId: directHost_66f374e5fb06d375
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/share-previews:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "预览 115 分享"
+      description: "解析 115 分享链接并创建预览。"
+      operationId: directHost_3d83e5563fef437e
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/share-previews/{preview_ref}/items:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "列出分享条目"
+      description: "列出分享预览中的条目。"
+      operationId: directHost_aeb3fbdd5c1df524
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - name: preview_ref
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/share-receives:
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "接收 115 分享"
+      description: "把 115 分享转存到账号选择指向的目录。"
+      operationId: directHost_399119b736202cb7
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+  /api/plugin-host/transfers/115/targets:
+    get:
+      tags:
+        - Direct Host APIs
+      summary: "列出转存目标"
+      description: "列出 115 转存目标目录。"
+      operationId: directHost_9c227b1169ea16b4
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: read
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+    post:
+      tags:
+        - Direct Host APIs
+      summary: "创建转存目标"
+      description: "创建 115 转存目标目录引用。"
+      operationId: directHost_8d953e33d87fdd93
+      x-dian115-category: "plugin-transfer"
+      x-dian115-risk: write
+      x-dian115-host-credentials: true
+      x-dian115-in-process-only: true
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功响应；业务结构以宿主 Handler 为准
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericHostObject'
+        '400':
+          $ref: '#/components/responses/HostError'
+        default:
+          $ref: '#/components/responses/HostError'
+
 components:
   securitySchemes:
     AdminBearer:
@@ -2330,6 +5781,10 @@ components:
           schema:
             $ref: '#/components/schemas/PoolIntentEpisodesRequest'
   schemas:
+    GenericHostObject:
+      type: object
+      additionalProperties: true
+      description: 宿主通用 Handler 的 JSON 响应；字段以宿主实现为准。
     HostError:
       type: object
       additionalProperties: true
@@ -3125,18 +6580,6 @@ components:
         retry_count: {type: integer, minimum: 0}
         created_at: {type: string, format: date-time}
         updated_at: {type: string, format: date-time}
-    PluginEmbyEpisodeCoverage:
-      type: object
-      additionalProperties: false
-      required: [proxy_id, tmdb_id, season, total_episodes, covered_episodes, needed_episodes, complete]
-      properties:
-        proxy_id: {type: integer, format: int64, minimum: 0}
-        tmdb_id: {type: integer, minimum: 1}
-        season: {type: integer, minimum: 0}
-        total_episodes: {type: integer, minimum: 1, maximum: 10000}
-        covered_episodes: {type: string}
-        needed_episodes: {type: string}
-        complete: {type: boolean}
     PoolIntentCreateRequest:
       type: object
       additionalProperties: false
@@ -3155,9 +6598,7 @@ components:
           items: {type: string}
         total_episodes: {type: integer, minimum: 0}
         initial_covered_episodes: {type: string}
-        initial_needed_episodes:
-          type: string
-          description: 固定范围订阅（episode_scope_mode=fixed）不提交 library_snapshot_provided 时，宿主先读取所选实例媒体库，再从目标中扣除已有集，最后创建并启动搜索。范围为空、越界或全部已存在时不创建订阅。
+        initial_needed_episodes: {type: string}
         library_snapshot_provided: {type: boolean}
         episode_scope_mode: {type: string, enum: [follow, fixed]}
     PoolIntentEpisodesRequest:
@@ -3319,18 +6760,6 @@ components:
         id: {type: integer}
         name: {type: string}
         original_name: {type: string}
-        original_language: {type: string}
-        next_episode_to_air:
-          description: 下一集播出信息；无已公布排期时省略此字段。
-          type: object
-          additionalProperties: true
-          required: [id, season_number, episode_number, air_date, name]
-          properties:
-            id: {type: integer}
-            season_number: {type: integer, minimum: 0}
-            episode_number: {type: integer, minimum: 0}
-            air_date: {type: string}
-            name: {type: string}
         overview: {type: string}
         poster_path: {type: string}
         backdrop_path: {type: string}
