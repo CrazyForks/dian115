@@ -4,7 +4,7 @@
 
 - 10 套 `classic_html` 普通富文本模板，适合需要兼容旧 Telegram 客户端的用户。
 - 10 套 `rich_blocks` 模板，面向 Telegram Bot API 10.3 Rich Message。
-- 每套都覆盖当前 **40 个独立通知事件**，整包可导入，也可只选择部分事件。
+- 每套都覆盖当前 **41 个独立通知事件**，整包可导入，也可只选择部分事件。
 - 所有包均使用 `dian115-notify-template-package` v2，不携带私有图片地址。
 
 ## 选择协议
@@ -21,45 +21,45 @@
 
 ## 普通富文本：10 套
 
-这一组使用 Telegram HTML 能力：粗体、斜体、下划线、行内代码、剧透、引用、可折叠引用等。每套的栏目名、句式、收尾、符号和 emoji 都按风格重写。
+这一组使用 Telegram HTML 能力：粗体、斜体、下划线、行内代码、引用、可折叠引用等。每套的栏目名、字段标签、句式、符号、emoji 与画质点评都按风格整体重写。
 
 | 下载 | 风格 | 排版特征 | 适合场景 |
 | --- | --- | --- | --- |
-| [影视库首映](./notify-templates-classic-cinema-library.json) | 影院场记 | 斜体场刊、片库分段、放映收尾 | 影视库、Emby 家庭影院 |
-| [机器人调度](./notify-templates-classic-robot-dispatch.json) | 机器人回执 | 代码标题、系统分隔、ACK 收尾 | 自动化、任务队列 |
-| [搞笑小喇叭](./notify-templates-classic-comedy-radio.json) | 轻松搞笑 | 剧透标题、口语栏目、不丢正事 | 朋友群、轻松频道 |
-| [运维执行摘要](./notify-templates-classic-ops-briefing.json) | 正式运维 | 下划线标识、执行结论、审计语气 | 管理员、运维审计 |
-| [极简留白手记](./notify-templates-classic-minimal-note.json) | 极简编辑 | 短标题、低噪音、克制分隔 | 高频通知、小屏阅读 |
-| [家庭客厅](./notify-templates-classic-cozy-home.json) | 温和管家 | 家庭语气、舒缓提醒、客厅收尾 | 家庭服务器、共享 Emby |
-| [侦探案卷](./notify-templates-classic-detective-file.json) | 黑色案卷 | 线索、案情、结案层次 | 安全通知、错误追踪 |
-| [复古街机](./notify-templates-classic-retro-arcade.json) | 8-bit 任务卡 | 代码块、关卡语气、SAVE 收尾 | 游戏化任务频道 |
-| [古典纪事](./notify-templates-classic-classical-chronicle.json) | 中式简牍 | 卷目、细目、入档句式 | 收藏库、中文文化主题 |
-| [新闻编辑部](./notify-templates-classic-newsroom-wire.json) | 即时快讯 | 核心先行、追加报道、时间线 | 多事件播报频道 |
+| [航站播报](./notify-templates-classic-airport-broadcast.json) | 航站楼广播 | 航班信息屏、登机口栏目、final call 收尾 | 家庭影院主频道、动态群组 |
+| [电报局](./notify-templates-classic-telegraph-office.json) | 老式电传 | 急电抬头、逐条电码、“电文毕”落款 | 运维频道、仪式感管理员 |
+| [厨房出餐单](./notify-templates-classic-kitchen-ticket.json) | 餐厅后厨 | 点菜明细、后厨备注、“出餐！”盖章 | 生活化家庭服务器 |
+| [天文观测日志](./notify-templates-classic-observatory-log.json) | 天文台夜班 | 观测编号、坐标式字段、归档落款 | 夜间运行的服务器 |
+| [法庭卷宗](./notify-templates-classic-court-record.json) | 庭审文书 | 审理查明、附卷证物、“宣判如下” | 安全事件、错误追踪 |
+| [深夜电台](./notify-templates-classic-midnight-radio.json) | 凌晨广播 | 来信式条目、温柔口播、晚安收尾 | 低频通知、私人频道 |
+| [实验室记录](./notify-templates-classic-lab-notebook.json) | 科研笔记 | 等宽栏目、观测值、“结论”小节 | 扫描质检、测试报告 |
+| [茶馆说书](./notify-templates-classic-storyteller-teahouse.json) | 评话段子 | “话说”开场、唱词条目、惊堂木收尾 | 朋友群、娱乐频道 |
+| [地铁线路图](./notify-templates-classic-metro-line.json) | 轨道导乘 | 站点式条目、换乘通道、终点站收尾 | 高频任务频道 |
+| [山岳气象](./notify-templates-classic-mountain-weather.json) | 气象公报 | 要素逐条、探空附录、出行判断 | 日报周报、平缓节奏 |
 
 ## Rich Message：10 套
 
-这一组的每个事件都使用 `rich_blocks`，不是只更换 emoji。10 套模板采用 10 种不同块顺序和信息密度，并按主题组合：
+这一组的每个事件都使用 `rich_blocks`，不是只更换 emoji。10 套模板采用 10 种不同块顺序、列数和折叠策略，并按主题组合：
 
-- Rich 短标题、字段表、业务列表、分隔线和可折叠详情；
+- Rich 标题、导语、1～3 列字段表、有序/无序列表、分隔线和可折叠详情；
 - 每个事件自身的核心数据，例如影视标题、播放用户、设备、账号、任务状态、计数或路径；
-- `failure_items`、`result_items`、`strm_tree_items` 结构化数组的逐项展示；
+- `failure_items`、`result_items`、`strm_tree_items`、`latest_media`、`recent_media` 结构化数组的逐项展示与截断提示；
 - `tg_time_now` 生成的 Telegram 本地化时间；
 - 自动媒体图片所生成的 Rich `<figure>` 布局；
-- 按事件跳转到 Emby、存储、任务、账号、更新、监控或订阅等功能的 `tg-button-row`，以及稳定编号复制按钮；
+- 按事件跳转到 Emby、任务、账号、更新、监控或订阅等功能的按钮行，以及目标路径复制按钮；
 - 完整的经典文本投影，用于经典协议预览或 Rich API 明确错误后的发送回退。
 
 | 下载 | 风格 | Rich 布局重点 | 适合场景 |
 | --- | --- | --- | --- |
-| [指挥中心](./notify-templates-rich-command-center.json) | 运行指挥台 | 三列密集字段先行、默认展开日志 | 综合管理频道 |
-| [星际任务](./notify-templates-rich-space-mission.json) | 航程遥测 | 状态导语、编号遥测列表、轨道字段 | 科幻、沉浸式主题 |
-| [臻选首映礼](./notify-templates-rich-luxury-premiere.json) | 高级影院 | 首映导语、三列宾客卡、折叠场记 | 高质量影视库 |
-| [AI 运营官](./notify-templates-rich-ai-operator.json) | AI 解析面板 | 输入字段、嵌套推理标题、结论高亮 | 自动化与 AI 服务 |
-| [数据实验室](./notify-templates-rich-data-laboratory.json) | 实验观测 | 三列参数、编号指标、折叠样本 | 测试、质量与扫描 |
-| [综艺庆典](./notify-templates-rich-variety-festival.json) | 开麦现场 | 高亮开场、业务节目单、后台详情 | 搞笑、鲜明群聊 |
-| [霓虹网格](./notify-templates-rich-neon-grid.json) | 赛博信号板 | 字段先行、霓虹标题、信号列表 | 技术监控频道 |
-| [博物档案馆](./notify-templates-rich-museum-archive.json) | 长期典藏 | 单列目录卡、展开档案、编号沿革 | 历史留档、低频重要事件 |
-| [冒险任务簿](./notify-templates-rich-adventure-quest.json) | 任务结算 | 编号进度、结果字段、任务日志 | 游戏化运营频道 |
-| [静谧仪表盘](./notify-templates-rich-calm-dashboard.json) | 克制工作台 | 单句结论、四项字段、默认收起详情 | 高频、低干扰频道 |
+| [飞行记录器](./notify-templates-rich-flight-recorder.json) | 航空黑匣子 | 时间戳导语先行、双列遥测、原始记录默认展开 | 综合管理频道 |
+| [围棋棋谱](./notify-templates-rich-go-kifu.json) | 对局棋谱 | 单列局面字段、编号着手列表、折叠棋评 | 游戏化运营频道 |
+| [急诊病历](./notify-templates-rich-er-chart.json) | 急诊病历卡 | 高亮主诉、三列生命体征、危险按钮 | 告警与错误频道 |
+| [拍卖图录](./notify-templates-rich-auction-catalog.json) | 拍卖行图录 | 开拍导语、双列拍品卡、编号 lot 列表 | 影视收藏与入库频道 |
+| [深空测控](./notify-templates-rich-deep-space-tracking.json) | 测控电文 | 三列信号字段先行、折叠轨道参数 | 技术监控频道 |
+| [号外](./notify-templates-rich-newspaper-extra.json) | 报纸号外 | 大标题导语、单列事实栏、折叠背景 | 多事件播报频道 |
+| [品鉴菜单](./notify-templates-rich-tasting-menu.json) | 餐厅品鉴 | 上菜顺序列表先行、双列配餐字段 | 生活化家庭频道 |
+| [索书卡](./notify-templates-rich-card-catalog.json) | 图书馆卡片 | 单列索书字段卡、折叠典藏沿革 | 长期留档、低频事件 |
+| [演唱会场刊](./notify-templates-rich-concert-program.json) | 演出节目单 | 节目单列表、三列票务字段、花絮默认展开 | 热闹群聊频道 |
+| [潜水日志](./notify-templates-rich-dive-log.json) | 水肺记录 | 深度时间字段、折叠装备清单、无序要点 | 低频巡检与日报 |
 
 ## 导入方法
 
@@ -76,8 +76,8 @@
 
 - 标题文案、栏目名、提示语、收尾语；
 - 所有 emoji、分隔符、字段标签；
-- 粗体、斜体、高亮、引用等格式；
-- Rich Blocks 的标题、表格、列表、折叠区和按钮文案；
+- 粗体、斜体、下划线、行内代码、引用、折叠引用等格式；
+- Rich Blocks 的标题、字段表、列表、折叠区和按钮文案；
 - Dolby Vision、HDR、4K、1080P 四档画质点评。
 
 需要保留的是 `{{ ... }}` / `{% ... %}` 中的变量、条件和循环；按钮的 `action` / `value` 也应使用系统允许的动作。除此之外，模板文案没有锁死内容。每个事件拥有独立的变量合同，导入器会拒绝未知变量、错误配对的富文本控制符和非法 Rich Blocks。
@@ -86,7 +86,7 @@
 
 这 20 套模板的通知标题均为静态短标题，最长 **16 个可见字符**；Rich 标题块也只使用简短的静态栏目名。影视名、用户名、路径、错误文本等可变长字段全部放在正文、字段表或折叠详情中，避免 Telegram 会话列表和通知横幅的标题失控。
 
-自定义标题时建议继续保持在 18 个字符以内，不要在标题中插入 `title`、`show_name`、`target_path`、`error`等无固定长度的变量。
+自定义标题时建议继续保持在 18 个字符以内，不要在标题中插入 `title`、`show_name`、`target_path`、`error` 等无固定长度的变量。
 
 ## 图片策略
 
@@ -95,16 +95,17 @@
 - 有 TMDB 图片时优先使用媒体图；否则由当前通知事件的图片策略决定。
 - Rich 协议下，自动图片会进入 Rich Message 媒体布局；经典协议下使用兼容的图文发送。
 
-## 覆盖的 40 个事件
+## 覆盖的 41 个事件
 
 - 播放：`playback_start`、`playback_stop`
-- 媒体库：`media_library_add`、`media_library_update`、`media_library_delete`
+- 媒体库：`media_library_add`、`media_library_update`
 - Emby 账户安全：`emby_user_authenticated`、`emby_user_authentication_failed`、`emby_user_locked_out`、`emby_user_created`、`emby_user_deleted`、`emby_user_password_changed`、`emby_user_policy_updated`
 - 整理与扫描：`library_organize_success`、`library_organize_skip`、`library_organize_fail`、`library_quality_scan`、`library_missing_scan`、`strm_generate`
 - 文件操作：`share_receive`、`offline_download`、`tg_auto_transfer`、`tg_auto_offline`、`tg_video_download`、`account_migration`、`ed2k_task`、`media_auto_share`
 - 账号：`account_cookie_invalid`、`account_switched`、`account_checkin`、`dianying_checkin`
 - 容器与项目更新：`container_update_check`、`container_update_result`、`container_update_test`、`dian115_self_update`
 - 代理健康：`proxy_health_daily_report`、`proxy_health_test_report`
+- 运行统计：`daily_statistics_report`、`emby_library_statistics_report`
 - 订阅：`subscribe_added`、`subscribe_landed`、`subscribe_partial`
 - 插件：`plugin_notification_message`
 
@@ -112,11 +113,10 @@
 
 发布前已使用当前 Dian115 后端完成：
 
-- 20 个 JSON 包语法校验；
-- 800 个模板的导入归一化和事件变量合同校验；
-- 800 个样例上下文渲染；
-- 经典 Telegram HTML 预览校验；
-- 400 个 Rich 模板的各类标题、字段表、折叠、业务列表、按钮和本地化时间合同校验；
-- 三类结构化数组循环、8 类画质点评引用和 10 种 Rich 布局指纹校验；
+- 20 个 JSON 包语法与严格字段校验；
+- 820 个模板的导入归一化和事件变量合同校验；
+- 820 个样例上下文渲染，正文均非空；
+- 经典 Telegram HTML 格式配对校验；
+- 410 个 Rich 模板的标题、字段表、折叠、数组循环、按钮和本地化时间合同校验，Rich HTML 与纯文本投影均渲染成功；
 - 标题静态化和 18 字符上限校验；
-- 每包 40 事件、无重复 key、无 `image_url` 的可移植性校验。
+- 每包 41 事件、无重复 key、无 `image_url` 的可移植性校验。
