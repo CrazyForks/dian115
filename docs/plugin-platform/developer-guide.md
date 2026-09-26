@@ -173,6 +173,8 @@ Read `DIAN115_PLUGIN_FILESYSTEM` during initialization. `private-root` is the no
 
 ## 5. Use Host Call
 
+需要一页看全所有可调用接口时，查 [宿主接口速查表](host-api-quick-reference.md)；逐字段请求/响应格式以 [OpenAPI](openapi-v1.yaml) 为准。
+
 Local request:
 
 ```json

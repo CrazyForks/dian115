@@ -24,7 +24,7 @@ Read these files in order:
 3. [WASM runtime v1](wasm-runtime-v1.md): reactor ABI, broker imports, quotas, Telegram events and lifecycle. [Process runtime v1](process-runtime-v1.md) documents the legacy compatibility path.
 4. [Host Call v2](host-call-v2.md): local Host APIs, external HTTP/HTTPS, local services, proxy precedence, credentials, limits and errors.
 5. [Vue Federation UI v1](ui-federation-v1.md): build contract, component props, bridge API, trusted same-origin behavior and every stable theme variable.
-6. [OpenAPI](openapi-v1.yaml): exact request and response schemas for every approved local Host API.
+6. [OpenAPI](openapi-v1.yaml): exact request and response schemas for every approved local Host API. [宿主接口速查表](host-api-quick-reference.md) 按分类列出一页可看的全部 164 条接口。
 7. [Black-box conformance](conformance/README.md): runtime smoke testing and public-surface checks without main-project source.
 
 Machine-readable schemas:
